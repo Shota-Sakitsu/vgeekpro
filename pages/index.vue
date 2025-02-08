@@ -694,11 +694,6 @@ if (import.meta.client) {
 				   rel="noopener noreferrer" target="_blank">
 					{{ $t('topPage.openGmail') }}
 				</a>
-				<a :href="`https://mail.yahoo.co.jp/compose/?To=mailto:${mailAddress}`"
-				   class="tw-self-stretch tw-my-2 tw-flex-1 tw-items-center tw-rounded-full tw-bg-rose-500 hover:tw-bg-rose-700 tw-text-white tw-px-8 tw-py-4"
-				   rel="noopener noreferrer" target="_blank">
-					{{ $t('topPage.openYahooJapanMail') }}
-				</a>
 			</div>
 		</BModal>
 		<client-only>
@@ -725,11 +720,20 @@ if (import.meta.client) {
 								</ul>
 							</li>
 							<li class="list-group-item">
-								<span class="fs-4">崎津 祥汰 / 秋雪 こおり</span>
+								<span class="fs-4">崎津 祥汰</span>
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">主な貢献</li>
-									<li class="list-group-item">細部デザイン調整</li>
-									<li class="list-group-item">リファクタリング</li>
+									<li class="list-group-item">新機能追加</li>
+									<li class="list-group-item">YouTube APIプロキシ提供</li>
+								</ul>
+							</li>
+							<li class="list-group-item">
+								<span class="fs-4">参加タレントの皆様</span>
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-info">主な貢献</li>
+									<li class="list-group-item">自己紹介の提供</li>
+									<li class="list-group-item">バグや改善案の提示</li>
+									<li class="list-group-item">ぶいぎーく！への参加</li>
 								</ul>
 							</li>
 							<li class="list-group-item">
@@ -737,7 +741,7 @@ if (import.meta.client) {
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">テストや応援などを行ってくださる</li>
 									<li class="list-group-item">各配信者のファンの皆様</li>
-									<li class="list-group-item">ふとした時に流れてきたVTuberリスナーの皆様</li>
+									<li class="list-group-item">ふとした時に流れてきたリスナーの皆様</li>
 									<li class="list-group-item">このサイトや各チャンネル・ストリームにアクセスした皆様</li>
 								</ul>
 							</li>
