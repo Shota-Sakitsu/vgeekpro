@@ -12,17 +12,12 @@ useSeoMeta({
 		<hr class="py-1 w-75 tw-border-t-4 tw-border-t-fuchsia-300"/>
 		<CommonHead heading-level="3" ja="" en=""/>
 		<p class="tw-py-8">
-			コミックマーケット105は2024年12月29日および30日に開催される予定です。<br>
-			会場へのアクセス、会場内のマップおよび、開催時刻等の最新情報は
-			<wbr>
-			<a href="https://www.comiket.co.jp/info-a/C105/C105Info.html" target="_blank">コミックマーケット105のご案内<small>(コミックマーケット公式サイト)</small></a>をご確認ください。
+			コミックマーケット105は2024年12月29日および30日に無事に開催されました。<br>
+			参加者の皆さん、そして運営委員の皆様お疲れ様でした。
 		</p>
 		<hr class="py-1 w-50 tw-border-t-2 tw-border-t-amber-300"/>
 		<section class="container-xl">
 			<CommonHead heading-level="3" ja="参加情報" en="Store information"/>
-			<p class="py-1">
-				サークル名をクリックまたはタップすると、Webカタログへ移動します
-			</p>
 			<table class="table table-dark table-hover table-bordered tw-border-lime-700 align-middle">
 				<thead>
 				<tr>
@@ -54,7 +49,7 @@ useSeoMeta({
 				<tr>
 					<th scope="row">うさねこらーじ</th>
 					<th scope="row" rowspan="2">
-						<a href="https://webcatalog.circle.ms/Circle/20027464" target="_blank">うさねこらーじ</a>
+						うさねこらーじ
 					</th>
 					<td>サークル参加</td>
 					<td rowspan="2">月曜日(2日目)</td>
@@ -70,7 +65,7 @@ useSeoMeta({
 				<tr>
 					<th scope="row">椎 半音</th>
 					<th scope="row">
-						<a href="https://webcatalog.circle.ms/Circle/20005147" target="_blank">椎半音GAMES</a>
+						椎半音GAMES
 					</th>
 					<td>サークル参加</td>
 					<td>月曜日(2日目)</td>
@@ -82,7 +77,7 @@ useSeoMeta({
 				<tr>
 					<th scope="row">三峰スズ</th>
 					<th scope="row">
-						<a href="https://webcatalog.circle.ms/Circle/20005360" target="_blank">三峰スズ工房</a>
+						三峰スズ工房
 					</th>
 					<td>サークル参加</td>
 					<td>月曜日(2日目)</td>
@@ -94,7 +89,7 @@ useSeoMeta({
 				<tr>
 					<th scope="row">珠響そうき</th>
 					<th scope="row">
-						<a href="https://webcatalog.circle.ms/Circle/20006857" target="_blank">Visterminal</a>
+						Visterminal
 					</th>
 					<td>サークル参加</td>
 					<td>月曜日(2日目)</td>
@@ -106,7 +101,7 @@ useSeoMeta({
 				<tr>
 					<th scope="row">夢向せつな</th>
 					<th scope="row">
-						<a href="https://webcatalog.circle.ms/Circle/20027903" target="_blank">ゆめむかい工房</a>
+						ゆめむかい工房
 					</th>
 					<td>サークル参加</td>
 					<td>月曜日(2日目)</td>

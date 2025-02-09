@@ -1,35 +1,62 @@
 <script lang="ts" setup>
 
+import {randomInt} from "~/composables/ExtendUtils";
+import type {SearchResponse} from "~/composables/youtubeApi/Types";
+
 type VideoMemberAttributes = {
 	url: string,
+	alreadyInitialized: boolean,
+	isShorts: boolean,
 }
 
-type Video = {
-	url: string,
-	videoId: string,
-	publishedAt: string,
-	channelTitle: string,
-	title: string,
-	description: string,
-	thumbnail: string,
-	liveBroadcast: string,
-	liveScheduledStartTime: string,
-	liveActualStartTime: string,
-	liveActualEndTime: string
-}
 
 const {locale} = useI18n();
 const config = useRuntimeConfig();
 
 const props = defineProps<VideoMemberAttributes>();
 
-const memberVideo = ref<Video[]>([]);
+const memberVideo = ref<SearchResponse>({
+	items: [],
+	results: {
+		recode: {
+			totalCounts: 0,
+			resultCounts: 0,
+			updatedAt: 0,
+		},
+		page: {
+			pageLimit: 50,
+			currentPage: 1,
+			totalPages: 1,
+		}
+	}
+});
 const isStart = ref(true);
 const errorLog = ref("");
 
+const colors: ("primary" | "secondary" | "success" | "danger" | "warning" | "info")[] = ["primary", "secondary", "success", "danger", "warning", "info"];
+const placeholderColors = toRef<("primary" | "secondary" | "success" | "danger" | "warning" | "info")[]>([]);
+
+for (let i = 0; i < 8; i++) {
+	placeholderColors.value.push(colors[randomInt(6)])
+}
+
+const loadedImageList = toRef<{ [videoId: string]: boolean }>({});
+
+const loadCardImage = (videoId: string) => {
+	loadedImageList.value[videoId] = true;
+}
+
+const emits = defineEmits<{
+	(event: 'lastUpdated', updatedAt: number): void,
+}>();
+
 watch(() => props.url, async () => {
 	try {
-		memberVideo.value = await $fetch<Video[]>(props.url);
+		memberVideo.value = await $fetch<SearchResponse>(props.url);
+		emits("lastUpdated", memberVideo.value.results.recode.updatedAt);
+		for (const item of memberVideo.value.items) {
+			loadedImageList.value[item.videoId] = false;
+		}
 		isStart.value = false;
 	} catch (error) {
 		errorLog.value = 'API Error!' + error;
@@ -38,38 +65,39 @@ watch(() => props.url, async () => {
 	immediate: true
 });
 
+const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+const printMedia = useMediaQuery('print');
+
 </script>
 
 <template>
 	<section class="list-container tw-h-[400px] tw-my-3">
-		<div v-if="isStart === false && memberVideo.length !== 0" class="tw-leading-loose tw-text-black tw-flex tw-flex-row tw-h-full tw-overflow-x-auto scrollbar">
-			<div v-for="videoItem in memberVideo" class="tw-h-full tw-mx-2">
+		<div v-if="isStart === false && memberVideo.results.recode.resultCounts !== 0" class="tw-leading-loose tw-text-black tw-flex tw-flex-row tw-h-full tw-overflow-x-auto scrollbar">
+			<div v-for="videoItem in memberVideo.items" class="tw-h-full tw-mx-2">
 				<a :key="videoItem.videoId" :href="videoItem.url" class="tw-h-full disable-link-icons">
-					<BCard class="video-list-card tw-h-full">
+					<BCard :class="`video-list-card tw-h-full${videoItem.isShorts ? ' shorts' : ''}`" :style="`border-color: ${ videoItem.thumbnailColor.hexadecimal };`">
 						<template v-slot:img>
-							<BCardImg :alt="videoItem.title" :height="1280" :src="videoItem.thumbnail" :width="720" class="thumbnail"/>
+							<img v-if="Object.keys(videoItem.thumbnails).length == 0" :alt="videoItem.title" :class="`thumbnail ${loadedImageList[videoItem.videoId] ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" loading="lazy" @load="() => {loadCardImage(videoItem.videoId);}"/>
+							<img v-else :alt="videoItem.title" :class="`thumbnail ${loadedImageList[videoItem.videoId] ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" :srcset="Object.values(videoItem.thumbnails).map<string>(value => `${value.url} ${value.width}w`).join(',')" loading="lazy" @load="() => {loadCardImage(videoItem.videoId);}"/>
+							<div v-if="!loadedImageList[videoItem.videoId]" :class="`thumbnail placeholder-wave placeholder`" :style="`background: ${videoItem.thumbnailColor.hexadecimal};`"></div>
 						</template>
-						<BCardTitle>
-							<p class="tw-text-sm tw-text-center text-line-hidden">{{ videoItem.title }}</p>
-						</BCardTitle>
-						<template v-slot:footer>
-							<div class="tw-h-[5em] description-text">
-								<small class="channel-name">{{ videoItem.channelTitle }}</small><br>
-								<small>
+						<template v-slot:default>
+							<div class="d-flex flex-column h-100">
+								<p :lang="videoItem.defaultLanguage" class="flex-grow-1 tw-text-sm text-line-hidden video-title">{{ videoItem.title }}</p>
+								<small :lang="videoItem.defaultLanguage" class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary">{{ videoItem.channelTitle }}</small><br>
+								<small class="mt-2 description-text text-secondary flex-shrink-1 flex-grow-0">
 									<span v-if="videoItem.liveBroadcast == 'upcoming'">
 										<span class="tw-me-1">{{ $t("videoListBox.scheduledAt").replace("%s", new Date(videoItem.liveScheduledStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
 									</span>
 									<span v-else-if="videoItem.liveBroadcast == 'live'">
 										<span class="tw-me-1">{{ $t("videoListBox.from").replace("%s", new Date(videoItem.liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
 									</span>
+									<span v-else-if="Object.keys(videoItem).indexOf('liveActualEndTime') !== -1">
+										<span>{{ $t("videoListBox.from").replace("%s", new Date(videoItem.liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span><br>
+										<span>{{ $t("videoListBox.to").replace("%s", new Date(videoItem.liveActualEndTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
+									</span>
 									<span v-else>
-										<span v-if="videoItem.liveActualStartTime != ''">
-											<span>{{ $t("videoListBox.from").replace("%s", new Date(videoItem.liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span><br>
-											<span>{{ $t("videoListBox.to").replace("%s", new Date(videoItem.liveActualEndTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
-										</span>
-										<span v-else>
-											<span>{{ $t("videoListBox.postedAt").replace("%s", new Date(videoItem.publishedAt).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
-										</span>
+										<span>{{ $t("videoListBox.postedAt").replace("%s", new Date(videoItem.publishedAt).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
 									</span>
 								</small>
 							</div>
@@ -78,8 +106,28 @@ watch(() => props.url, async () => {
 				</a>
 			</div>
 		</div>
-		<div v-if="!isStart && memberVideo.length === 0" class="tw-leading-loose tw-flex tw-flex-row tw-h-full tw-items-center tw-justify-center ">
-			<p class="tw-text-5xl">Not Found</p>
+		<div v-else-if="!isStart && memberVideo.results.recode.resultCounts === 0" class="tw-leading-loose tw-flex tw-flex-row tw-h-full tw-items-center tw-justify-center ">
+		</div>
+		<div v-else-if="!props.alreadyInitialized" class="tw-leading-loose tw-text-black tw-flex tw-flex-row tw-h-full tw-overflow-x-clip scrollbar">
+			<div v-for="(color, num) in placeholderColors" :key="num" class="tw-h-full tw-mx-2">
+				<BCard :class="`video-list-card tw-h-full${props.isShorts ? ' shorts' : ''} border-${color} ${((reduceMotion || printMedia) ? '' : ' placeholder-wave')}`">
+					<template v-slot:img>
+						<div :class="`thumbnail placeholder bg-${color}`"></div>
+					</template>
+					<template v-slot:default>
+						<div class="d-flex flex-column h-100">
+							<p class="flex-grow-1 tw-text-sm text-line-hidden video-title">
+								<span class="placeholder col-8"></span>
+							</p>
+							<small class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary placeholder"></small><br>
+							<small class="mt-2 description-text text-secondary flex-shrink-1 flex-grow-0">
+								<span class="placeholder col-6"></span><br>
+								<span class="placeholder col-6"></span>
+							</small>
+						</div>
+					</template>
+				</BCard>
+			</div>
 		</div>
 	</section>
 </template>
@@ -90,16 +138,28 @@ watch(() => props.url, async () => {
 	width: 100cqw
 }
 
+.video-title {
+	font-size: 18pt;
+	line-height: 1.0625em;
+}
+
 .description-text {
 	font-size: 10.5pt;
-	line-height: 10.5pt;
+	line-height: 1.125em;
 }
 
 .thumbnail {
 	/* 親指の爪…… ではなく縮小版 */
 	background-color: #cccccc;
 	aspect-ratio: 16/9;
-	object-fit: contain;
+	object-fit: cover;
+
+	&.loading {
+		width: 0 !important;
+		height: 0 !important;
+		overflow: clip !important;
+		opacity: 0 !important;
+	}
 }
 
 .channel-name {
@@ -108,6 +168,34 @@ watch(() => props.url, async () => {
 
 .video-list-card {
 	width: calc(calc(100cqw / 1.5) - 1rem);
+}
+
+.shorts {
+	&.video-list-card {
+		width: calc(calc(100cqw / 2.5) - 1rem);
+		flex-direction: row;
+	}
+
+	& .thumbnail {
+		aspect-ratio: 9/16;
+		height: 100%;
+		width: fit-content;
+	}
+}
+
+@container (width <= 768px) {
+	.shorts {
+		&.video-list-card {
+			flex-direction: column;
+		}
+
+		& .thumbnail {
+			aspect-ratio: 16/9;
+			width: 100%;
+			height: fit-content;
+			object-fit: cover;
+		}
+	}
 }
 
 @container (width >= 640px) {
@@ -119,36 +207,60 @@ watch(() => props.url, async () => {
 @container (width >= 768px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 3.5) - 1rem);
+
+		&.shorts {
+			width: calc(calc(100cqw / 1.75) - 1rem);
+		}
 	}
 }
 
 @container (width >= 1024px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 4.5) - 1rem);
+
+		&.shorts {
+			width: calc(calc(100cqw / 2) - 1rem);
+		}
 	}
 }
 
 @container (width >= 1280px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 5.5) - 1rem);
+
+		&.shorts {
+			width: calc(calc(100cqw / 2.5) - 1rem);
+		}
 	}
 }
 
 @container (width >= 1536px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 6.5) - 1rem);
+
+		&.shorts {
+			width: calc(calc(100cqw / 2.75) - 1rem);
+		}
 	}
 }
 
 @container (width >= 1920px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 7.5) - 1rem);
+
+		&.shorts {
+			width: calc(calc(100cqw / 2.75) - 1rem);
+		}
 	}
 }
 
 @container (width >= 3840px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 12.5) - 1rem);
+
+		&.shorts {
+			width: calc(calc(100cqw / 4.5) - 1rem);
+		}
 	}
 }
 </style>

@@ -376,12 +376,10 @@ const currentlySelectedTag = toRef("all");
 const displayMembers = computed(() => {
 	const returnBuffer: Member[] = [];
 	for (const member of members) {
-		console.log(member);
 		if (checkTag(currentlySelectedTag.value, member.tag)) {
 			returnBuffer.push(member);
 		}
 	}
-	console.log(returnBuffer);
 	return returnBuffer;
 })
 
@@ -473,6 +471,9 @@ if (import.meta.client) {
 	})
 }
 
+const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+const printPaper = useMediaQuery("print");
+
 </script>
 
 <template>
@@ -497,9 +498,9 @@ if (import.meta.client) {
 			<div class="tw-relative tw-bg-gradient-to-b tw-from-stone-600 tw-from-60%">
 				<div class="tw-z-0 tw-absolute tw-top-40 xl:tw-top-28 tw-overflow-hidden tw-w-full">
 					<client-only>
-						<Vue3Marquee :duration="50">
+						<Vue3Marquee :duration="(printPaper || reduceMotion) ? 0 : 50">
 							<span
-								class="tw-select-none tw-z-0 tw-inline-block tw-font-bold tw-text-stone-500/75 tw-text-[50vw] xl:tw-text-[15vw]">
+								:class="`tw-select-none tw-z-0 tw-inline-block tw-font-bold tw-text-stone-500/75 ${(printPaper || reduceMotion) ? 'tw-text-[12vw] tw-text-center' : 'tw-text-[50vw] xl:tw-text-[15vw]'}`">
 								Vgeek Production
 							</span>
 						</Vue3Marquee>

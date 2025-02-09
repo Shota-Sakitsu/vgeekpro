@@ -8,8 +8,9 @@ export default defineNuxtConfig({
 		'@bootstrap-vue-next/nuxt',
 		"@nuxtjs/i18n",
 		"@nuxtjs/robots",
+		"@vueuse/nuxt"
 	],
-	ssr: true,
+	ssr: false,
 	tailwindcss: {
 		config: {
 			prefix: "tw-"
@@ -52,6 +53,8 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			WEB_API: process.env.VUE_APP_WEB_API ?? "https://infra.virtlive.jp/ytapi/v1",
+			WEB_API_VERSION: process.env.VUE_APP_WEB_API_VERSION ?? "2",
+			YT_API_VERSION2: process.env.YT_API_VERSION2 ?? "https://infra.virtlive.jp/ytapi/v2.1",
 		}
 	}
 })

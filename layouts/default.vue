@@ -1,8 +1,12 @@
 <template>
-	<slot/>
+	<div :data-bs-theme="prefersDark ? 'dark' : 'light'">
+		<slot/>
+	</div>
 </template>
 
 <script lang="ts" setup>
+import {provideSSRWidth} from "@vueuse/core";
+
 useHead({
 	htmlAttrs: {
 		lang: "ja",
@@ -22,4 +26,9 @@ useSeoMeta({
 	twitterCard: "summary_large_image",
 	twitterSite: "@vgeekproduction",
 })
+
+provideSSRWidth(1280);
+
+const prefersDark = false;
+//const prefersDark = useMediaQuery('(prefers-color-scheme: dark)');
 </script>
