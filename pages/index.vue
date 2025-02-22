@@ -474,6 +474,16 @@ if (import.meta.client) {
 const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 const printPaper = useMediaQuery("print");
 
+const customDateFormatter = (date: Date): string => {
+	const year = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {era: "long", year: "numeric"})).format(date).replace(/(?<!\d)1年$/g, "元年");
+	const month = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {month: "numeric"})).format(date);
+	const day = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {day: "numeric"})).format(date);
+	const weekday = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {weekday: "narrow"})).format(date);
+	const hour = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {hour: "numeric", hour12: true})).format(date);
+
+	return `${year}${month}${day} (${weekday}) ${hour}頃`;
+}
+
 </script>
 
 <template>
@@ -753,12 +763,26 @@ const printPaper = useMediaQuery("print");
 		</client-only>
 	</main>
 	<footer class="tw-my-16 tw-footer tw-text-base tw-text-center">
-		<a class="tw-inline xl:tw-hidden" @click.stop="showContributorsModal = true">
-			<client-only>Copyright &copy; 2023, {{ thisYear }} Usaneko Large</client-only>
-		</a>
-		<a class="tw-hidden xl:tw-inline">
-			<client-only>Copyright &copy; 2023, {{ thisYear }} Usaneko Large</client-only>
-		</a>
+		<span>
+			<a class="tw-inline xl:tw-hidden" @click.stop="showContributorsModal = true">
+				<client-only>Copyright &copy; 2023, {{ thisYear }} Usaneko Large</client-only>
+			</a>
+			<a class="tw-hidden xl:tw-inline">
+				<client-only>Copyright &copy; 2023, {{ thisYear }} Usaneko Large</client-only>
+			</a>
+		</span>
+		<span>
+			<span v-if="reduceMotion || printPaper">
+				<br>
+				<span v-if="reduceMotion">
+					アニメーション削減が有効です。
+				</span>
+				<span v-else-if="printPaper">
+					{{ customDateFormatter(new Date()) }}印刷<br>
+					掲載されている内容は印刷当時のものです。
+				</span>
+			</span>
+		</span>
 	</footer>
 </template>
 

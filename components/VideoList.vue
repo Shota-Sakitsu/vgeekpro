@@ -75,16 +75,14 @@ const printMedia = useMediaQuery('print');
 		<div v-if="isStart === false && memberVideo.results.recode.resultCounts !== 0" class="tw-leading-loose tw-text-black tw-flex tw-flex-row tw-h-full tw-overflow-x-auto scrollbar">
 			<div v-for="videoItem in memberVideo.items" class="tw-h-full tw-mx-2">
 				<a :key="videoItem.videoId" :href="videoItem.url" class="tw-h-full disable-link-icons">
-					<BCard :class="`video-list-card tw-h-full${videoItem.isShorts ? ' shorts' : ''}`" :style="`border-color: ${ videoItem.thumbnailColor.hexadecimal };`">
+					<BCard :class="`video-list-card tw-h-full${videoItem.isShorts ? ' shorts' : ''}`" :style="`border-color: ${ videoItem.thumbnailColor.hexadecimal };`" body-class="video-list-card-body">
 						<template v-slot:img>
 							<img v-if="Object.keys(videoItem.thumbnails).length == 0" :alt="videoItem.title" :class="`thumbnail ${loadedImageList[videoItem.videoId] ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" loading="lazy" @load="() => {loadCardImage(videoItem.videoId);}"/>
 							<img v-else :alt="videoItem.title" :class="`thumbnail ${loadedImageList[videoItem.videoId] ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" :srcset="Object.values(videoItem.thumbnails).map<string>(value => `${value.url} ${value.width}w`).join(',')" loading="lazy" @load="() => {loadCardImage(videoItem.videoId);}"/>
 							<div v-if="!loadedImageList[videoItem.videoId]" :class="`thumbnail placeholder-wave placeholder`" :style="`background: ${videoItem.thumbnailColor.hexadecimal};`"></div>
 						</template>
 						<template v-slot:default>
-							<div class="d-flex flex-column h-100">
-								<p :lang="videoItem.defaultLanguage" class="flex-grow-1 tw-text-sm text-line-hidden video-title">{{ videoItem.title }}</p>
-								<small :lang="videoItem.defaultLanguage" class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary">{{ videoItem.channelTitle }}</small><br>
+							<div class="d-flex flex-column-reverse h-100">
 								<small class="mt-2 description-text text-secondary flex-shrink-1 flex-grow-0">
 									<span v-if="videoItem.liveBroadcast == 'upcoming'">
 										<span class="tw-me-1">{{ $t("videoListBox.scheduledAt").replace("%s", new Date(videoItem.liveScheduledStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
@@ -100,6 +98,8 @@ const printMedia = useMediaQuery('print');
 										<span>{{ $t("videoListBox.postedAt").replace("%s", new Date(videoItem.publishedAt).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
 									</span>
 								</small>
+								<small :lang="videoItem.defaultLanguage" class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary">{{ videoItem.channelTitle }}</small><br>
+								<p :lang="videoItem.defaultLanguage" class="flex-grow-0 tw-text-sm video-title">{{ videoItem.title }}</p>
 							</div>
 						</template>
 					</BCard>
@@ -139,8 +139,19 @@ const printMedia = useMediaQuery('print');
 }
 
 .video-title {
-	font-size: 18pt;
+	font-size: 15pt;
 	line-height: 1.0625em;
+
+	// 手元の環境では何故か動作しない
+	// 互換性のため主要ブラウザ実装後にコメントアウト
+	//line-clamp: 3;
+
+	// Safari 以外用。何故か火狐も --moz- では無く --webkit- で動作する。
+	//--webkit-line-clamp: 3;
+	// 互換性の都合上、 --webkit-box でのみ動作するとのこと
+	//display: -webkit-box;
+	//--webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .description-text {
@@ -153,6 +164,7 @@ const printMedia = useMediaQuery('print');
 	background-color: #cccccc;
 	aspect-ratio: 16/9;
 	object-fit: cover;
+	flex-shrink: 0;
 
 	&.loading {
 		width: 0 !important;
