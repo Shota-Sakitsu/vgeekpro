@@ -65,6 +65,22 @@ watch(() => props.url, async () => {
 	immediate: true
 });
 
+const update = () => {
+	$fetch<SearchResponse>(props.url).then(response => {
+		memberVideo.value = response;
+	});
+}
+
+let updateCancellerToken: number | NodeJS.Timeout;
+
+onMounted(() => {
+	updateCancellerToken = setInterval(update, 30_000);
+})
+
+onBeforeUnmount(() => {
+	clearInterval(updateCancellerToken);
+})
+
 const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 const printMedia = useMediaQuery('print');
 
