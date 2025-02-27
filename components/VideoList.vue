@@ -157,16 +157,6 @@ const printMedia = useMediaQuery('print');
 .video-title {
 	font-size: 15pt;
 	line-height: 1.0625em;
-
-	// 手元の環境では何故か動作しない
-	// 互換性のため主要ブラウザ実装後にコメントアウト
-	//line-clamp: 3;
-
-	// Safari 以外用。何故か火狐も --moz- では無く --webkit- で動作する。
-	//--webkit-line-clamp: 3;
-	// 互換性の都合上、 --webkit-box でのみ動作するとのこと
-	//display: -webkit-box;
-	//--webkit-box-orient: vertical;
 	overflow: hidden;
 }
 
@@ -223,6 +213,18 @@ const printMedia = useMediaQuery('print');
 			height: fit-content;
 			object-fit: cover;
 		}
+	}
+}
+
+@container (640px <= width <= 768px) {
+	.shorts.video-list-card {
+		width: calc(calc(100cqw / 2.5) - 1rem);
+	}
+}
+
+@container (width <= 640px) {
+	.shorts.video-list-card {
+		width: calc(calc(100cqw / 1.5) - 1rem);
 	}
 }
 
