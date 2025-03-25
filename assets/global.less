@@ -71,9 +71,29 @@
 	background-image: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
 }
 
-/**
-ここから下のマーカーまでのコードは崎津 祥汰によって開発されています。
-*/
+// 印刷時および視差効果(アニメーション)削減が有効時の動作設定
+// 出来るだけアニメーションやトランジションをしない。
+@media print, all and (prefers-reduced-motion: reduce) {
+	.tracking-in-contract {
+		animation: tracking-in-contract 0s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	}
+
+	.sample-slider .swiper-wrapper {
+		transition-duration: 0s;
+	}
+
+	.aos-init {
+		transition: none !important;
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	.placeholder-wave {
+		animation: none !important;
+		mask-image: none !important;
+	}
+}
+
 a[href]:not(.disable-link-icons) {
 
 	&[target="_blank" i][href^="//" i]::after,
@@ -137,4 +157,7 @@ a[href]:not(.disable-link-icons) {
 	}
 }
 
-/** ここまでは崎津 祥汰が開発 */
+.video-list-card-body {
+	overflow: hidden;
+	height: 100%;
+}

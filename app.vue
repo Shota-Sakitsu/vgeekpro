@@ -12,6 +12,23 @@
 <script lang="ts" setup>
 import "assets/global.less";
 
+useHead({
+	link: [
+		{
+			rel: "icon",
+			href: "/favicon.ico",
+			type: "image/x-icon",
+			sizes: "16x16 24x24 32x32 48x48 64x64 128x128 256x256"
+		},
+		{
+			rel: "icon",
+			href: "/favicon.svg",
+			type: "image/svg+xml",
+			sizes: "any"
+		}
+	]
+})
+
 const isShowEyeCatch = toRef(true);
 const isShowBackground = toRef(true);
 const isShowForeground = toRef(true);
