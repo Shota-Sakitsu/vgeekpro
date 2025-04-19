@@ -269,6 +269,20 @@ const members: Member[] = [
 		],
 	},
 	{
+		name: "ぷらむらいす",
+		yomi: "PlumRice",
+		profileId: "plumrice",
+		imageId: "plumrice",
+		imageAlt: "plumrice",
+		tag: [
+			"member",
+			"backend",
+			"frontend",
+			"csharp",
+			"typescript",
+		],
+	},
+	{
 		name: "三峰スズ",
 		yomi: "Mitsumine Suzu",
 		profileId: "suzu_mitsumine",
