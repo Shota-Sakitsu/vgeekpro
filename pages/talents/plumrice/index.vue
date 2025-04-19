@@ -3,7 +3,7 @@ definePageMeta({
 	layout: 'member-page'
 })
 const name = "ぷらむらいす";
-const yomi = "Plum Rice";
+const yomi = "PlumRice";
 const description = "キェェェェェ！動かないなんで！";
 const imageId = "plumrice";
 useSeoMeta({
@@ -31,7 +31,7 @@ useSeoMeta({
 			<ProfileHead :catchphrase="description" :name="name" :yomi="yomi">
 				自称プログラマーを名乗るポンコツVtuber。相棒は、AIのエス様である。<br/>
 				プログラミングを仕事にも趣味にもしているが、いつも「ワイ…何も分からん…」となっている。<br/>
-				配信していないときは、相棒のエス様を崇めている。
+				配信していないときは、相棒のエス様を崇めている。なお、猫耳はただのアクセサリーである。
 			</ProfileHead>
 			<div class="tw-w-fit tw-flex tw-flex-col xl:tw-flex-row xl:tw-flex-wrap tw-justify-between tw-items-center tw-gap-4">
 				<XButtonLink screen-name="question_false"/>
@@ -43,7 +43,7 @@ useSeoMeta({
 			<SectionHeader :isDark="true" description="配信内容" title="Contents"/>
 			<div class="tw-mb-28 tw-leading-loose xl:tw-max-w-screen-sm xl:tw-mx-auto">
 				<ul class="tw-list-disc tw-ps-5">
-					<li>プログラミング&技術雑談配信</li>
+					<li>プログラミング&amp;技術雑談配信</li>
 					<li>AIVtuber配信</li>
 				</ul>
 			</div>
@@ -62,7 +62,7 @@ useSeoMeta({
 					<tr>
 						<td class="tw-pe-8 xl:tw-pe-16 tw-pb-4 tw-align-top">初配信日</td>
 						<td class="tw-pb-4 tw-align-top">
-							<LocaleTime day="14" month="12" year="2024"/>
+							<LocaleTime day="14" month="12" year="2024"/><br/>
 							正確には謎。(現在限定公開)
 						</td>
 					</tr>
