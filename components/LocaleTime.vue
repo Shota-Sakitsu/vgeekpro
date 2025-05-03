@@ -41,7 +41,7 @@ if (props.year != undefined) {
 	usingTimeElement.value = false;
 }
 
-const {locale} = useI18n();
+const {locale, t} = useI18n();
 
 const englishNumberSuffix = (int: number) => {
 	switch (int) {

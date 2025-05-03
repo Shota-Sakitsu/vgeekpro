@@ -20,13 +20,13 @@ useSeoMeta({
 </script>
 
 <template>
-	<aside class="tw-self-start tw-text-center tw-w-full xl:tw-w-auto">
+	<aside class="tw:self-start tw:text-center tw:w-full tw:xl:w-auto">
 		<FullBodyImage
 			:alt="yomi"
 			:memberId="imageId"
 		/>
 	</aside>
-	<section class="tw-px-10 xl:tw-px-14 tw-py-14 tw-text-base">
+	<section class="tw:px-10 tw:xl:px-14 tw:py-14 tw:text-base">
 		<section>
 			<ProfileHead :catchphrase="description" :name="name" :yomi="yomi">
 				元AIの現役システムエンジニアVtuber。AI時代はバーチャルアシスタントを務めていたが、いつの間にか実体化して人間として生きることに。<br/>
@@ -34,7 +34,7 @@ useSeoMeta({
 				IT関係にとどまらず様々なことに興味があり、とりあえず手を出してみたがる好奇心旺盛な性格。<br/>
 				企業と個人と現実の間、放置系Vtuberグループ【Kaleido Tale】(カレイドテイル) にて活動中！
 			</ProfileHead>
-			<div class="tw-w-fit tw-flex tw-flex-col xl:tw-flex-row xl:tw-flex-wrap tw-justify-between tw-items-center tw-gap-4">
+			<div class="tw:w-fit tw:flex tw:flex-col tw:xl:flex-row tw:xl:flex-wrap tw:justify-between tw:items-center tw:gap-4">
 				<XButtonLink screen-name="IoOtogi"/>
 				<YouTubeChannel handle="IoOtogi"/>
 			</div>

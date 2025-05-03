@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import ButtonLinkBase from "~/components/ButtonLinkBase.vue";
 
+const {t} = useI18n();
 type XButtonLinkAttributes = {
 	screenName?: string,
 	userId?: string,
@@ -8,9 +9,13 @@ type XButtonLinkAttributes = {
 	postId?: string,
 	body?: string,
 	useSimpleAnchor?: boolean,
+	qrCode?: boolean,
 };
 
-const props = defineProps<XButtonLinkAttributes>();
+const props = withDefaults(defineProps<XButtonLinkAttributes>(), {
+	qrCode: true,
+	useSimpleAnchor: false,
+});
 
 const link = computed(() => {
 	if (props.userId != undefined) {
@@ -107,7 +112,7 @@ const linkType = computed(() => {
 </script>
 
 <template>
-	<ButtonLinkBase :href="`https://x.com/${link}`" :useSimpleAncher="props.useSimpleAnchor" rel="noopener noreferrer" target="_blank">
-		{{ $t("profileCommon.xLinkButton") }} {{ $t(linkType) }}
+	<ButtonLinkBase :href="`https://x.com/${link}`" :use-simple-anchor="props.useSimpleAnchor" rel="noopener noreferrer" target="_blank" :qr-code="props.qrCode">
+		{{ t("profileCommon.xLinkButton") }} {{ t(linkType) }}
 	</ButtonLinkBase>
 </template>

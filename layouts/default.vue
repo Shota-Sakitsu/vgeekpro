@@ -12,7 +12,7 @@ useHead({
 		lang: "ja",
 	},
 	bodyAttrs: {
-		class: "font-inter tw-bg-stone-600 tw-text-white"
+		class: "font-inter tw:bg-stone-600 tw:text-white"
 	}
 })
 useSeoMeta({

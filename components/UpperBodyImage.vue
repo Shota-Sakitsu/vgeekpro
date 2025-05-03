@@ -23,7 +23,7 @@ const imagePath = computed({
 <template>
 	<img
 		:alt="props.alt"
-		:class="props.replaceClass ?? (`tw-object-contain tw-mt-10 ${(props.isDisableMarginTopExpand ?? false) ? '' : 'xl:tw-mt-40 '}tw-mx-auto`)"
+		:class="props.replaceClass ?? (`tw:object-contain tw:mt-10 ${(props.isDisableMarginTopExpand ?? false) ? '' : 'tw:xl:mt-40 '}tw:mx-auto`)"
 		:height="props.height ?? 200"
 		:src="imagePath"
 		:width="props.width ?? 200"
