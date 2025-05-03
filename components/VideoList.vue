@@ -7,10 +7,12 @@ type VideoMemberAttributes = {
 	url: string,
 	alreadyInitialized: boolean,
 	isShorts: boolean,
+	selected: boolean,
+	currentKey: string,
 }
 
 
-const {locale} = useI18n();
+const {locale, t} = useI18n();
 const config = useRuntimeConfig();
 
 const props = defineProps<VideoMemberAttributes>();
@@ -46,17 +48,25 @@ const loadCardImage = (videoId: string) => {
 	loadedImageList.value[videoId] = true;
 }
 
+const scrollRequired = toRef(false);
+
 const emits = defineEmits<{
 	(event: 'lastUpdated', updatedAt: number): void,
+	(event: 'loadState', state: boolean): void,
 }>();
 
 watch(() => props.url, async () => {
 	try {
+		console.debug(`${props.currentKey}: Updating`);
+		emits("loadState", true);
 		memberVideo.value = await $fetch<SearchResponse>(props.url);
 		emits("lastUpdated", memberVideo.value.results.recode.updatedAt);
 		for (const item of memberVideo.value.items) {
 			loadedImageList.value[item.videoId] = false;
 		}
+		if (scrollRequired.value) scroll();
+		console.debug(`${props.currentKey}: Updated`);
+		emits("loadState", false);
 		isStart.value = false;
 	} catch (error) {
 		errorLog.value = 'API Error!' + error;
@@ -66,14 +76,34 @@ watch(() => props.url, async () => {
 });
 
 const update = () => {
+	emits("loadState", true);
+	console.debug(`${props.currentKey}: Updating`);
 	$fetch<SearchResponse>(props.url).then(response => {
 		memberVideo.value = response;
+		console.debug(`${props.currentKey}: Updated`);
+		emits("loadState", false)
 	});
 }
 
 let updateCancellerToken: number | NodeJS.Timeout;
 
+const scroll = () => {
+	console.debug("scrolling");
+	if (import.meta.client) {
+		const divider = document.querySelector(`video-list-container-${props.currentKey} .video-list-item`);
+		if (divider) divider.scrollIntoView({behavior: "instant", inline: "start", block: "nearest"});
+	}
+	scrollRequired.value = false;
+}
+
+watch(() => props.selected, (value) => {
+	if (value) scroll()
+}, {
+	immediate: true
+});
+
 onMounted(() => {
+	scrollRequired.value = true;
 	updateCancellerToken = setInterval(update, 30_000);
 })
 
@@ -87,52 +117,21 @@ const printMedia = useMediaQuery('print');
 </script>
 
 <template>
-	<section class="list-container tw-h-[400px] tw-my-3">
-		<div v-if="isStart === false && memberVideo.results.recode.resultCounts !== 0" class="tw-leading-loose tw-text-black tw-flex tw-flex-row tw-h-full tw-overflow-x-auto scrollbar">
-			<div v-for="videoItem in memberVideo.items" class="tw-h-full tw-mx-2">
-				<a :key="videoItem.videoId" :href="videoItem.url" class="tw-h-full disable-link-icons">
-					<BCard :class="`video-list-card tw-h-full${videoItem.isShorts ? ' shorts' : ''}`" :style="`border-color: ${ videoItem.thumbnailColor.hexadecimal };`" body-class="video-list-card-body">
-						<template v-slot:img>
-							<img v-if="Object.keys(videoItem.thumbnails).length == 0" :alt="videoItem.title" :class="`thumbnail ${loadedImageList[videoItem.videoId] ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" loading="lazy" @load="() => {loadCardImage(videoItem.videoId);}"/>
-							<img v-else :alt="videoItem.title" :class="`thumbnail ${loadedImageList[videoItem.videoId] ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" :srcset="Object.values(videoItem.thumbnails).map<string>(value => `${value.url} ${value.width}w`).join(',')" loading="lazy" @load="() => {loadCardImage(videoItem.videoId);}"/>
-							<div v-if="!loadedImageList[videoItem.videoId]" :class="`thumbnail placeholder-wave placeholder`" :style="`background: ${videoItem.thumbnailColor.hexadecimal};`"></div>
-						</template>
-						<template v-slot:default>
-							<div class="d-flex flex-column-reverse h-100">
-								<small class="mt-2 description-text text-secondary flex-shrink-1 flex-grow-0">
-									<span v-if="videoItem.liveBroadcast == 'upcoming'">
-										<span class="tw-me-1">{{ $t("videoListBox.scheduledAt").replace("%s", new Date(videoItem.liveScheduledStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
-									</span>
-									<span v-else-if="videoItem.liveBroadcast == 'live'">
-										<span class="tw-me-1">{{ $t("videoListBox.from").replace("%s", new Date(videoItem.liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
-									</span>
-									<span v-else-if="Object.keys(videoItem).indexOf('liveActualEndTime') !== -1">
-										<span>{{ $t("videoListBox.from").replace("%s", new Date(videoItem.liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span><br>
-										<span>{{ $t("videoListBox.to").replace("%s", new Date(videoItem.liveActualEndTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
-									</span>
-									<span v-else>
-										<span>{{ $t("videoListBox.postedAt").replace("%s", new Date(videoItem.publishedAt).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
-									</span>
-								</small>
-								<small :lang="videoItem.defaultLanguage" class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary">{{ videoItem.channelTitle }}</small><br>
-								<p :lang="videoItem.defaultLanguage" class="flex-grow-0 tw-text-sm video-title">{{ videoItem.title }}</p>
-							</div>
-						</template>
-					</BCard>
-				</a>
-			</div>
+	<section class="list-container tw:h-[400px] tw:my-3">
+		<div v-if="isStart === false && memberVideo.results.recode.resultCounts !== 0" :class="`video-list-container-${props.currentKey} tw:leading-loose tw:text-black tw:flex tw:flex-row tw:h-full tw:overflow-x-auto scrollbar`">
+			<VideoCard v-for="videoItem in memberVideo.items" :key="videoItem.videoId" :video-item="videoItem"/>
 		</div>
-		<div v-else-if="!isStart && memberVideo.results.recode.resultCounts === 0" class="tw-leading-loose tw-flex tw-flex-row tw-h-full tw-items-center tw-justify-center ">
+		<div v-else-if="!isStart && memberVideo.results.recode.resultCounts === 0" class="tw:leading-loose tw:flex tw:flex-row tw:h-full tw:items-center tw:justify-center ">
 		</div>
-		<div v-else-if="!props.alreadyInitialized" class="tw-leading-loose tw-text-black tw-flex tw-flex-row tw-h-full tw-overflow-x-clip scrollbar">
-			<div v-for="(color, num) in placeholderColors" :key="num" class="tw-h-full tw-mx-2">
-				<BCard :class="`video-list-card tw-h-full${props.isShorts ? ' shorts' : ''} border-${color} ${((reduceMotion || printMedia) ? '' : ' placeholder-wave')}`">
+		<div v-else-if="!props.alreadyInitialized" class="tw:leading-loose tw:text-black tw:flex tw:flex-row tw:h-full tw:overflow-x-clip scrollbar">
+			<div v-for="(color, num) in placeholderColors" :key="num" class="tw:h-full tw:mx-2">
+				<BCard :class="`video-list-card tw:h-full${props.isShorts ? ' shorts' : ''} border-${color} ${((reduceMotion || printMedia) ? '' : ' placeholder-wave')}`">
 					<template v-slot:img>
 						<div :class="`thumbnail placeholder bg-${color}`"></div>
 					</template>
 					<template v-slot:default>
 						<div class="d-flex flex-column h-100">
-							<p class="flex-grow-1 tw-text-sm text-line-hidden video-title">
+							<p class="flex-grow-1 tw:text-sm text-line-hidden video-title">
 								<span class="placeholder col-8"></span>
 							</p>
 							<small class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary placeholder"></small><br>

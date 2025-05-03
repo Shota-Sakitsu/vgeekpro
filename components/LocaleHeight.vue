@@ -13,7 +13,7 @@ type LocaleHeightAttributes = {
 
 const props = defineProps<LocaleHeightAttributes>();
 
-const {locale} = useI18n();
+const {locale, t} = useI18n();
 
 const toInch = (input: number, unit: "inch" | "feet" | "yard" | "millimeter" | "centimeter" | "decimeter" | "meter") => {
 	let processBuffer = input;
@@ -111,7 +111,7 @@ const calculatedHeight = computed(() => {
 
 <template>
 	<span>
-		{{ (props.isApprox ?? false) ? `${$t("profileCommon.approx")} ` : "" }}{{ calculatedHeight }}
+		{{ (props.isApprox ?? false) ? `${t("profileCommon.approx")} ` : "" }}{{ calculatedHeight }}
 	</span>
 </template>
 

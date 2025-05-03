@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const {locale} = useI18n();
+const {locale, t} = useI18n();
 type CommonHeadProps = {
 	headingLevel: 1 | 2 | 3 | 4 | 5 | 6 | "1" | "2" | "3" | "4" | "5" | "6" | "none" | null | undefined;
 	en: string;

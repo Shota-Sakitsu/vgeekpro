@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import ButtonLinkBase from "~/components/ButtonLinkBase.vue";
 
+const {t} = useI18n();
 type TwitCastingStreamAttributes = {
 	/**
 	 * アカウントタイプを選択します。
@@ -18,9 +19,13 @@ type TwitCastingStreamAttributes = {
 	accountType: "CasAccount" | "XUser" | "Instagram" | "InstagramAlt" | "Facebook" | "Google" | "Unknown"
 	userId: string
 	useSimpleAnchor?: boolean,
+	qrCode?: boolean;
 };
 
-const props = defineProps<TwitCastingStreamAttributes>();
+const props = withDefaults(defineProps<TwitCastingStreamAttributes>(), {
+	qrCode: true,
+	useSimpleAnchor: false,
+});
 const accountPrefix = computed({
 	get: () => {
 		switch (props.accountType) {
@@ -40,10 +45,11 @@ const accountPrefix = computed({
 		}
 	}
 })
+
 </script>
 
 <template>
-	<ButtonLinkBase :href="`https://www.twitcasting.tv/${accountPrefix}${props.userId}`" :useSimpleAncher="props.useSimpleAnchor" rel="noopener noreferrer" target="_blank">
-		{{ $t("profileCommon.twitCastingLinkButton") }} {{ $t("profileCommon.linkButtonStream") }}
+	<ButtonLinkBase :href="`https://www.twitcasting.tv/${accountPrefix}${props.userId}`" :use-simple-anchor="props.useSimpleAnchor" rel="noopener noreferrer" target="_blank" :qr-code="props.qrCode">
+		{{ t("profileCommon.twitCastingLinkButton") }} {{ t("profileCommon.linkButtonStream") }}
 	</ButtonLinkBase>
 </template>

@@ -20,13 +20,13 @@ useSeoMeta({
 </script>
 
 <template>
-	<aside class="tw-self-start tw-text-center tw-w-full xl:tw-w-auto">
+	<aside class="tw:self-start tw:text-center tw:w-full tw:xl:w-auto">
 		<FullBodyImage
 			:alt="yomi"
 			:memberId="imageId"
 		/>
 	</aside>
-	<section class="tw-px-10 xl:tw-px-14 tw-py-14 tw-text-base">
+	<section class="tw:px-10 tw:xl:px-14 tw:py-14 tw:text-base">
 		<section>
 			<ProfileHead :catchphrase="description" :name="name" :yomi="yomi">
 				CEH，OSCP，OSEP等のハッキング能力を証明する資格を取得しているハッカー系Vtuber💻💀<br/>
@@ -34,7 +34,7 @@ useSeoMeta({
 				映画のような遠い世界の話のように感じるハッキング行為だが、気づかないうちに意外と身近に危険は潜んでいる<br/>
 				日頃からの情報セキュリティの備え方について一緒に学んでいこう！✨
 			</ProfileHead>
-			<div class="tw-w-fit tw-flex tw-flex-col xl:tw-flex-row xl:tw-flex-wrap tw-justify-between tw-items-center tw-gap-4">
+			<div class="tw:w-fit tw:flex tw:flex-col tw:xl:flex-row tw:xl:flex-wrap tw:justify-between tw:items-center tw:gap-4">
 				<XButtonLink screen-name="427Kohi"/>
 				<YouTubeChannel handle="逸般人のがくHackerGaku"/>
 			</div>

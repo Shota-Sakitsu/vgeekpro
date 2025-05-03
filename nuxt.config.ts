@@ -1,8 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import viteTailwind from "@tailwindcss/vite";
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	modules: [
-		"@nuxtjs/tailwindcss",
+		//"@nuxtjs/tailwindcss",
 		"nuxt-aos",
 		"@nuxt/image",
 		'@bootstrap-vue-next/nuxt',
@@ -11,14 +12,23 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt"
 	],
 	ssr: false,
+	/*
 	tailwindcss: {
 		config: {
 			prefix: "tw-"
 		}
 	},
+	*/
+	vite: {
+		plugins: [
+			viteTailwind(),
+		]
+	},
 	css: [
-		"bootstrap/dist/css/bootstrap.css",
+		"@mdi/font/css/materialdesignicons.css",
+		//"bootstrap/dist/css/bootstrap.css",
 		"bootstrap-icons/font/bootstrap-icons.css",
+		"assets/tailwind.css",
 	],
 	i18n: {
 		defaultLocale: 'ja',
@@ -28,27 +38,30 @@ export default defineNuxtConfig({
 			redirectOn: "root",
 			fallbackLocale: 'ja',
 		},
-		langDir: "./locales",
+		//langDir: "./locales",
 		locales: [
 			{
 				name: "JP",
 				code: "ja",
-				language: "ja-JP",
+				iso: "ja-JP",
 				file: "ja.json"
 			},
 			{
 				name: "US",
 				code: "en-US",
-				language: "en-US",
+				iso: "en-US",
 				file: "en-us.json"
 			},
 			{
 				name: "UK",
 				code: "en-GB",
-				language: "en-GB",
-				file: "en-gb.json"
+				iso: "en-GB",
+				file: "en-gb.json",
 			},
-		]
+		],
+		compilation: {
+			strictMessage: false,
+		}
 	},
 	runtimeConfig: {
 		public: {

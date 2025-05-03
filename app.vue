@@ -2,11 +2,11 @@
 	<NuxtLayout>
 		<NuxtPage/>
 	</NuxtLayout>
-	<div v-if="isShowBackground" class="eye-catch-backdrop tw-hidden md:tw-block"></div>
-	<div v-if="isShowEyeCatch" class="eye-catch tw-hidden md:tw-block">
+	<div v-if="isShowBackground" class="eye-catch-backdrop tw:hidden tw:md:block"></div>
+	<div v-if="isShowEyeCatch" class="eye-catch tw:hidden tw:md:block">
 		<video autoplay class="object-fit-cover w-100 h-100" muted src="/videos/eyecatch.webm" type='video/webm' @abort="notShow" @canplay="imageLoaded" @error="notShow"/>
 	</div>
-	<div v-if="isShowForeground" class="eye-catch-backdrop tw-hidden md:tw-block"></div>
+	<div v-if="isShowForeground" class="eye-catch-backdrop tw:hidden tw:md:block"></div>
 </template>
 
 <script lang="ts" setup>

@@ -1,8 +1,11 @@
 @import "./fonts.less";
 
+/*
+v4 Migration
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*/
 
 @keyframes tracking-in-contract {
 	0% {
@@ -94,66 +97,71 @@
 	}
 }
 
-a[href]:not(.disable-link-icons) {
+a {
+	text-decoration: none;
+	color: inherit;
 
-	&[target="_blank" i][href^="//" i]::after,
-	&[target="_blank" i][href^="http://" i]::after,
-	&[target="_blank" i][href^="https://" i]::after {
-		/* 外部リンクを示すアイコンの表示 */
-		margin-left: .25em;
-		content: "\F1C5";
-		display: inline-block;
-		vertical-align: 1.25em;
-		font-size: .5em;
-		//noinspection CssNoGenericFontName
-		font-family: bootstrap-icons !important;
-	}
+	&[href]:not(.disable-link-icons) {
 
-	&::before {
-		display: inline-block;
-		margin-right: .25em;
-		//noinspection CssNoGenericFontName
-		font-family: bootstrap-icons !important;
-		vertical-align: -.125em;
-		font-size: 1em;
-	}
+		&[target="_blank" i][href^="//" i]::after,
+		&[target="_blank" i][href^="http://" i]::after,
+		&[target="_blank" i][href^="https://" i]::after {
+			/* 外部リンクを示すアイコンの表示 */
+			margin-left: .25em;
+			content: "\F1C5";
+			display: inline-block;
+			vertical-align: 1.25em;
+			font-size: .5em;
+			//noinspection CssNoGenericFontName
+			font-family: bootstrap-icons !important;
+		}
 
-	/* メールリンクの識別アイコン */
+		&::before {
+			display: inline-block;
+			margin-right: .25em;
+			//noinspection CssNoGenericFontName
+			font-family: bootstrap-icons !important;
+			vertical-align: -.125em;
+			font-size: 1em;
+		}
 
-	&[href^="mailto:" i]::before {
-		content: "\F32F";
-	}
+		/* メールリンクの識別アイコン */
 
-	/* YouTubeのリンク識別アイコン */
+		&[href^="mailto:" i]::before {
+			content: "\F32F";
+		}
 
-	&[href^="https://youtube.com/" i]::before,
-	&[href^="https://www.youtube.com/" i]::before {
-		content: "\F62B";
-	}
+		/* YouTubeのリンク識別アイコン */
 
-	/* Twitchのリンク識別アイコン */
+		&[href^="https://youtube.com/" i]::before,
+		&[href^="https://www.youtube.com/" i]::before {
+			content: "\F62B";
+		}
 
-	&[href^="https://twitch.tv/" i]::before,
-	&[href^="https://www.twitch.tv/" i]::before {
-		content: "\F5EE";
-	}
+		/* Twitchのリンク識別アイコン */
 
-	/* GitHubのリンク識別アイコン */
+		&[href^="https://twitch.tv/" i]::before,
+		&[href^="https://www.twitch.tv/" i]::before {
+			content: "\F5EE";
+		}
 
-	&[href^="https://github.com/" i]::before,
-	&[href^="https://www.github.com/" i]::before {
-		content: "\F3ED";
-	}
+		/* GitHubのリンク識別アイコン */
 
-	/* Xのリンク識別アイコン */
+		&[href^="https://github.com/" i]::before,
+		&[href^="https://www.github.com/" i]::before {
+			content: "\F3ED";
+		}
 
-	&[href^="https://twitter.com/" i]::before,
-	&[href^="https://www.twitter.com/" i]::before,
-	&[href^="https://mobile.twitter.com/" i]::before,
-	&[href^="https://x.com/" i]::before,
-	&[href^="https://www.x.com/" i]::before,
-	&[href^="https://mobile.x.com/" i]::before {
-		content: "\F8DB";
+		/* Xのリンク識別アイコン */
+
+		&[href^="https://twitter.com/" i]::before,
+		&[href^="https://www.twitter.com/" i]::before,
+		&[href^="https://mobile.twitter.com/" i]::before,
+		&[href^="https://x.com/" i]::before,
+		&[href^="https://www.x.com/" i]::before,
+		&[href^="https://mobile.x.com/" i]::before {
+			content: "\F8DB";
+		}
 	}
 }
 

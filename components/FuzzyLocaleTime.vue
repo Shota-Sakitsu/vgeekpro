@@ -13,7 +13,7 @@ type LocaleTimeAttributes = {
 
 const props = defineProps<LocaleTimeAttributes>();
 
-const {locale} = useI18n();
+const {locale, t} = useI18n();
 
 const englishMonthName = (month: number, isZeroStart: boolean = false) => {
 	if (isZeroStart) month += 1;

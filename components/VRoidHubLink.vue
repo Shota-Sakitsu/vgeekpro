@@ -1,14 +1,19 @@
 <script lang="ts" setup>
 import ButtonLinkBase from "~/components/ButtonLinkBase.vue";
 
+const {t} = useI18n();
 type VRoidHubLinkAttributes = {
 	userId?: string,
 	characterId?: string,
 	modelId?: string,
 	useSimpleAnchor?: boolean,
+	qrCode?: boolean;
 };
 
-const props = defineProps<VRoidHubLinkAttributes>();
+const props = withDefaults(defineProps<VRoidHubLinkAttributes>(), {
+	qrCode: true,
+	useSimpleAnchor: false,
+});
 
 const link = computed(() => {
 	if (props.userId != undefined) {
@@ -35,7 +40,7 @@ const type = computed(() => {
 </script>
 
 <template>
-	<ButtonLinkBase :href="`https://hub.vroid.com/${link}`" :useSimpleAncher="props.useSimpleAnchor" rel="noopener noreferrer" target="_blank">
-		{{ $t("profileCommon.vRoidHubLinkButton") }}{{ $t(type) }}
+	<ButtonLinkBase :href="`https://hub.vroid.com/${link}`" :use-simple-anchor="props.useSimpleAnchor" rel="noopener noreferrer" target="_blank" :qr-code="props.qrCode">
+		{{ t("profileCommon.vRoidHubLinkButton") }}{{ t(type) }}
 	</ButtonLinkBase>
 </template>

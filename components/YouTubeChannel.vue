@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import ButtonLinkBase from "~/components/ButtonLinkBase.vue";
 
+const {t} = useI18n();
 type YouTubeChannelAttributes = ({
 	/**
 	 * チャンネルの一意のIDです。おおよそ`UC****`のようなIDです。
@@ -19,9 +20,13 @@ type YouTubeChannelAttributes = ({
 	 */
 	userId?: string
 	useSimpleAnchor?: boolean,
+	qrCode?: boolean;
 });
 
-const props = defineProps<YouTubeChannelAttributes>();
+const props = withDefaults(defineProps<YouTubeChannelAttributes>(), {
+	qrCode: true,
+	useSimpleAnchor: false,
+});
 
 const href = computed({
 	get: () => {
@@ -65,10 +70,11 @@ const text = computed({
 		}
 	}
 })
+
 </script>
 
 <template>
-	<ButtonLinkBase :href="href" :rel="rel" :target="target" :useSimpleAncher="props.useSimpleAnchor">
-		{{ $t(text) }}
+	<ButtonLinkBase :href="href" :rel="rel" :target="target" :use-simple-anchor="props.useSimpleAnchor" :qr-code="props.qrCode">
+		{{ t(text) }}
 	</ButtonLinkBase>
 </template>
