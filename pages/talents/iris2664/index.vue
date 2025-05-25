@@ -4,10 +4,10 @@ import OtherSiteLink from '~/components/OtherSiteLink.vue';
 definePageMeta({
 	layout: 'member-page'
 })
-const name = "東雲絢芽";
-const yomi = "SHINONOME Ayame";
+const name = "陽向あやめ";
+const yomi = "HINATA Ayame";
 const description = "カーネルの海をクロール中！";
-const imageId = "shinonome_ayame";
+const imageId = "hinata_ayame";
 useSeoMeta({
 	title: name,
 	description,
@@ -39,7 +39,7 @@ useSeoMeta({
 			<div class="tw:w-fit tw:flex tw:flex-col tw:xl:flex-row tw:xl:flex-wrap tw:justify-between tw:items-center tw:gap-4">
 				<XButtonLink screen-name="iris2664"/>
 				<YouTubeChannel handle="iris2664jp"/>
-				<OtherSiteLink href="https://vtuber.iris2664.com/">東雲絢芽個人サイト</OtherSiteLink>
+				<OtherSiteLink href="https://vtuber.iris2664.com/">陽向 あやめ個人サイト</OtherSiteLink>
 			</div>
 		</section>
 		<section>
@@ -82,17 +82,17 @@ useSeoMeta({
 					</tr>
 					<tr>
 						<td class="tw:pe-8 tw:xl:pe-16 tw:pb-4 tw:align-top">モデラー</td>
-						<td class="tw:pb-4 tw:align-top">東雲絢芽(3D)</td>
+						<td class="tw:pb-4 tw:align-top">陽向 あやめ</td>
 					</tr>
 					<tr>
 						<td class="tw:pe-8 tw:xl:pe-16 tw:pb-4 tw:align-top">ファンネーム</td>
-						<td class="tw:pb-4 tw:align-top">しのあやリスナー</td>
+						<td class="tw:pb-4 tw:align-top">ひなあやリスナー</td>
 					</tr>
 					<tr>
 						<td class="tw:pe-8 tw:xl:pe-16 tw:pb-4 tw:align-top">ハッシュタグ</td>
 						<td class="tw:pb-4 tw:align-top">
-							配信タグ: <a href="https://x.com/hashtag/shinoaya" rel="noopener noreferrer" target="_blank">#shinoaya</a> <br/>
-							ファンアートタグ: <a href="https://x.com/hashtag/shinoayarts" rel="noopener noreferrer" target="_blank">#shinoayarts</a>
+							配信タグ: <a href="https://x.com/hashtag/hinaayachan" rel="noopener noreferrer" target="_blank">#hinaayachan</a> <br/>
+							ファンアートタグ: <a href="https://x.com/hashtag/ひなあやーと" rel="noopener noreferrer" target="_blank">#ひなあやーと</a>
 						</td>
 					</tr>
 					<tr>

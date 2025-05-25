@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 
+import {customDateFormatter} from "~/composables/ExtendUtils";
+import VGeekMarquee from "~/components/VGeekMarquee.vue";
+
 export type Member = {
 	name: string,
 	yomi: string,
@@ -30,11 +33,11 @@ const members: Member[] = [
 		],
 	},
 	{
-		name: "東雲絢芽",
-		yomi: "SHINONOME Ayame",
+		name: "陽向あやめ",
+		yomi: "HINATA Ayame",
 		profileId: "iris2664",
-		imageId: "shinonome_ayame",
-		imageAlt: "SHINONOME Ayame",
+		imageId: "hinata_ayame",
+		imageAlt: "HINATA Ayame",
 		tag: [
 			"security-girl",
 			"member"
@@ -313,7 +316,6 @@ const members: Member[] = [
 			"member"
 		],
 	},
-
 ];
 
 type Unit = {
@@ -341,8 +343,8 @@ const Units: Unit[] = [
 				yomi: "Usaneko Large",
 			},
 			{
-				name: "東雲絢芽",
-				yomi: "SHINONOME Ayame",
+				name: "陽向あやめ",
+				yomi: "HINATA Ayame",
 			},
 		],
 	},
@@ -488,15 +490,6 @@ if (import.meta.client) {
 const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 const printPaper = useMediaQuery("print");
 
-const customDateFormatter = (date: Date): string => {
-	const year = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {era: "long", year: "numeric"})).format(date).replace(/(?<!\d)1年$/g, "元年");
-	const month = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {month: "numeric"})).format(date);
-	const day = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {day: "numeric"})).format(date);
-	const weekday = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {weekday: "narrow"})).format(date);
-	const hour = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {hour: "numeric", hour12: true})).format(date);
-
-	return `${year}${month}${day} (${weekday}) ${hour}頃`;
-}
 
 </script>
 
@@ -521,14 +514,7 @@ const customDateFormatter = (date: Date): string => {
 		<section id="about" class="bg-maze tw:w-full">
 			<div class="tw:relative tw:bg-gradient-to-b tw:from-stone-600 tw:from-60%">
 				<div class="tw:z-0 tw:absolute tw:top-40 tw:xl:top-28 tw:overflow-hidden tw:w-full">
-					<client-only>
-						<Vue3Marquee :duration="(printPaper || reduceMotion) ? 0 : 50">
-							<span
-								:class="`tw:select-none tw:z-0 tw:inline-block tw:font-bold tw:text-stone-500/75 ${(printPaper || reduceMotion) ? 'tw:text-[12vw] tw:text-center' : 'tw:text-[50vw] tw:xl:text-[15vw]'}`">
-								Vgeek Production
-							</span>
-						</Vue3Marquee>
-					</client-only>
+					<VGeekMarquee/>
 				</div>
 				<div class="tw:z-10 tw:relative tw:flex tw:flex-col tw:xl:flex-row tw:justify-center tw:items-center">
 					<section class="tw:px-10 tw:xl:px-14 tw:py-14 tw:text-base">
