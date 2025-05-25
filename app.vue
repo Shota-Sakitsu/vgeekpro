@@ -2,11 +2,13 @@
 	<NuxtLayout>
 		<NuxtPage/>
 	</NuxtLayout>
-	<div v-if="isShowBackground" class="eye-catch-backdrop tw:hidden tw:md:block"></div>
-	<div v-if="isShowEyeCatch" class="eye-catch tw:hidden tw:md:block">
-		<video autoplay class="object-fit-cover w-100 h-100" muted src="/videos/eyecatch.webm" type='video/webm' @abort="notShow" @canplay="imageLoaded" @error="notShow"/>
-	</div>
-	<div v-if="isShowForeground" class="eye-catch-backdrop tw:hidden tw:md:block"></div>
+	<template v-if="!motionReduced">
+		<div v-if="isShowBackground" class="eye-catch-backdrop tw:hidden tw:md:block"></div>
+		<div v-if="isShowEyeCatch" class="eye-catch tw:hidden tw:md:block">
+			<video autoplay class="object-fit-cover w-100 h-100" muted src="/videos/eyecatch.webm" type='video/webm' @abort="notShow" @canplay="imageLoaded" @error="notShow"/>
+		</div>
+		<div v-if="isShowForeground" class="eye-catch-backdrop tw:hidden tw:md:block"></div>
+	</template>
 </template>
 
 <script lang="ts" setup>
@@ -49,6 +51,11 @@ const imageLoaded = () => {
 		isShowEyeCatch.value = false;
 	}, 3750)
 }
+
+const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+const printPaper = useMediaQuery("print");
+const motionReduced = computed(() => reduceMotion.value || printPaper.value);
+
 </script>
 
 <style lang="less" scoped>

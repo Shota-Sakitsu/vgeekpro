@@ -19,6 +19,16 @@ export class TriState {
 	}
 }
 
+export function customDateFormatter(date: Date): string {
+	const year = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {era: "long", year: "numeric"})).format(date).replace(/(?<!\d)1年$/g, "元年");
+	const month = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {month: "numeric"})).format(date);
+	const day = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {day: "numeric"})).format(date);
+	const weekday = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {weekday: "narrow"})).format(date);
+	const hour = (new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {hour: "numeric", hour12: true})).format(date);
+
+	return `${year}${month}${day} (${weekday}) ${hour}頃`;
+}
+
 export function randomInt(max: number): number {
 	return Math.floor(Math.random() * max);
 }
