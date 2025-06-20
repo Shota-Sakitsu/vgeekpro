@@ -55,7 +55,6 @@ const imageLoaded = () => {
 const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 const printPaper = useMediaQuery("print");
 const motionReduced = computed(() => reduceMotion.value || printPaper.value);
-
 </script>
 
 <style lang="less" scoped>

@@ -20,7 +20,7 @@
 				</span>
 			</div>
 			<div class="tw:my-10 tw:w-full tw:flex tw:justify-around tw:items-start">
-				<NuxtLinkLocale to="/#members" class="tw:self-stretch tw:flex-col tw:shrink tw:items-center tw:rounded-full tw:bg-rose-500 tw:hover:bg-rose-700 tw:text-white tw:px-8 tw:py-4" rel="noopener noreferrer">
+				<NuxtLinkLocale :to="`/#member-card-${profileId.replaceAll('_', '-')}`" class="tw:self-stretch tw:flex-col tw:shrink tw:items-center tw:rounded-full tw:bg-rose-500 tw:hover:bg-rose-700 tw:text-white tw:px-8 tw:py-4">
 					{{ t("profileCommon.backToTop") }}
 				</NuxtLinkLocale>
 			</div>
@@ -50,6 +50,12 @@ useSeoMeta({
 const {t} = useI18n();
 const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 const printPaper = useMediaQuery("print");
+
+const route = useRoute();
+const profileId = computed(() => {
+	let prefixLength = route.fullPath.replace(/\/talents\/.+$/i, "/talents/").length;
+	return route.fullPath.substring(prefixLength);
+});
 
 </script>
 <style lang="less">

@@ -386,6 +386,7 @@ const {locale, t} = useI18n();
 const mailAddress = "naomi.lilienthal.jpn@gmail.com";
 
 const thisYear = toRef((new Date().getFullYear()))
+const route = useRoute()
 
 const currentlySelectedTag = toRef("all");
 
@@ -490,7 +491,26 @@ if (import.meta.client) {
 const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 const printPaper = useMediaQuery("print");
 
+onMounted(async () => {
+	if (route.hash) {
+		await nextTick()
+		const elementId = route.hash.substring(1)
+		const element = document.getElementById(elementId)
 
+		console.log(elementId, element)
+		console.time("Scroll")
+
+		setTimeout(() => {
+			if (element) {
+				element.scrollIntoView({
+					behavior: "smooth",
+					block: "center",
+				})
+				console.timeEnd("Scroll")
+			}
+		}, 0);
+	}
+})
 </script>
 
 <template>
@@ -596,13 +616,9 @@ const printPaper = useMediaQuery("print");
 				<div class="tw:z-10 tw:relative tw:flex tw:flex-col tw:xl:flex-row tw:justify-center tw:items-center">
 					<section class="tw:px-10 tw:xl:px-14 tw:py-14 tw:text-base">
 						<section>
-							<SectionHeader :description="t('topPage.groupsSubtitle')" :isDark="true" title="Groups"
-										   titleColor="white"/>
+							<SectionHeader :description="t('topPage.groupsSubtitle')" :isDark="true" title="Groups" titleColor="white"/>
 							<section>
-								<UnitInformation v-for="unit in Units" :key="unit.unitId" :members="unit.members"
-												 :unit-id="unit.unitId" :unit-image-alt="unit.unitImageAlt"
-												 :unit-image-id="unit.unitImageId" :unit-name="unit.unitName"
-												 :unit-yomi="unit.unitYomi"/>
+								<UnitInformation v-for="unit in Units" :key="unit.unitId" :members="unit.members" :unit-id="unit.unitId" :unit-image-alt="unit.unitImageAlt" :unit-image-id="unit.unitImageId" :unit-name="unit.unitName" :unit-yomi="unit.unitYomi"/>
 							</section>
 						</section>
 					</section>
@@ -675,10 +691,16 @@ const printPaper = useMediaQuery("print");
 							<section>
 								<p class="tw:mb-6">参加希望者は、以下のいずれかの方法で運営までご連絡ください。</p>
 								<ul class="tw:mb-6 tw:list-disc tw:ps-5">
-									<li>Discord: usaneko_xlarge</li>
-									<li>X (Twitter): <a class="disable-link-icons tw:text-stone-900 text-decoration-none"
-														href="https://x.com/messages/compose?recipient_id=1644686586318327808"
-														rel="noopener noreferrer" target="_blank">@usaneko_xlarge</a></li>
+									<li>
+										<span class="contact-list-header">Discord</span>
+										<span class="me-1">:</span>
+										<span class="font-mono">usaneko_xlarge</span>
+									</li>
+									<li>
+										<span class="contact-list-header">X (Twitter)</span>
+										<span class="me-1">:</span>
+										<a class="font-mono disable-link-icons tw:text-stone-900 text-decoration-none" href="https://x.com/messages/compose?recipient_id=1644686586318327808" rel="noopener noreferrer" target="_blank">@usaneko_xlarge</a>
+									</li>
 									<li>このページに記載のメールアドレス</li>
 								</ul>
 							</section>
@@ -789,5 +811,17 @@ const printPaper = useMediaQuery("print");
 <style lang="less" scoped>
 optgroup {
 	font-style: normal;
+}
+
+.contact-list-header {
+	display: inline-block;
+	width: 11.25ex;
+	// 現状は Firefox だけで機能する。実装バージョンはFx55(2017/08/08)
+	// Chrome は10年以上前からテスト版で、この値は使えない
+	// Chrome も Blink に fork してから対応したので Safari は現状、対応すらしていない
+	// テキストのレンダリングに関しては Firefox が一番。
+	text-justify: inter-character;
+	text-align: justify;
+	text-align-last: justify;
 }
 </style>
