@@ -20,20 +20,20 @@ useSeoMeta({
 </script>
 
 <template>
-	<aside class="tw-self-start tw-text-center tw-w-full xl:tw-w-auto">
+	<aside class="tw:self-start tw:text-center tw:w-full tw:xl:w-auto">
 		<FullBodyImage
 			:alt="yomi"
 			:memberId="imageId"
 		/>
 	</aside>
-	<section class="tw-px-10 xl:tw-px-14 tw-py-14 tw-text-base">
+	<section class="tw:px-10 tw:xl:px-14 tw:py-14 tw:text-base">
 		<section>
 			<ProfileHead :catchphrase="description" :name="name" :yomi="yomi">
 				ふわふわと海から流されてきたVtuber。<br/>
 				プログラミング、ゲーム制作、Webサービス開発など、クリエイティブな配信をしています。<br/>
 				バグと戦いつつも、リスナーのみんなと一緒に、面白くて新しい世界を作っていきたい！
 			</ProfileHead>
-			<div class="tw-w-fit tw-flex tw-flex-col xl:tw-flex-row xl:tw-flex-wrap tw-justify-between tw-items-center tw-gap-4">
+			<div class="tw:w-fit tw:flex tw:flex-col tw:xl:flex-row tw:xl:flex-wrap tw:justify-between tw:items-center tw:gap-4">
 				<XButtonLink screen-name="nagi_nagisachan"/>
 				<YouTubeChannel handle="NagiNagisaCh"/>
 			</div>

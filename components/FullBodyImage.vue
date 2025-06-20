@@ -24,7 +24,7 @@ const imagePath = computed({
 		:height="props.height ?? 600"
 		:src="imagePath"
 		:width="props.width ?? 300"
-		class="tw-object-contain tw-mt-10 xl:tw-mt-40 tw-mx-auto"
+		class="tw:object-contain tw:mt-10 tw:xl:mt-40 tw:mx-auto"
 	/>
 </template>
 

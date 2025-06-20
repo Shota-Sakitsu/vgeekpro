@@ -7,18 +7,18 @@ useSeoMeta({
 
 <template>
 	<CommonlyHeader/>
-	<main id="main-contents" class="tw-pt-40 tw-w-full tw-flex tw-flex-col tw-items-center">
+	<main id="main-contents" class="tw:pt-40 tw:w-full tw:flex tw:flex-col tw:items-center">
 		<CommonHead heading-level="2" ja="コミックマーケット 105 特設ページ" en="Comiket #105 special page"/>
-		<hr class="py-1 w-75 tw-border-t-4 tw-border-t-fuchsia-300"/>
+		<hr class="py-1 w-75 tw:border-t-4 tw:border-t-fuchsia-300"/>
 		<CommonHead heading-level="3" ja="" en=""/>
-		<p class="tw-py-8">
+		<p class="tw:py-8">
 			コミックマーケット105は2024年12月29日および30日に無事に開催されました。<br>
 			参加者の皆さん、そして運営委員の皆様お疲れ様でした。
 		</p>
-		<hr class="py-1 w-50 tw-border-t-2 tw-border-t-amber-300"/>
+		<hr class="py-1 w-50 tw:border-t-2 tw:border-t-amber-300"/>
 		<section class="container-xl">
 			<CommonHead heading-level="3" ja="参加情報" en="Store information"/>
-			<table class="table table-dark table-hover table-bordered tw-border-lime-700 align-middle">
+			<table class="table table-dark table-hover table-bordered tw:border-lime-700 align-middle">
 				<thead>
 				<tr>
 					<th scope="colgroup" colspan="2">
@@ -113,10 +113,10 @@ useSeoMeta({
 				</tbody>
 			</table>
 		</section>
-		<div class="tw-my-10 tw-w-full tw-flex tw-justify-around tw-items-start">
-			<NuxtLink :href="localePath('/')" class="tw-self-stretch tw-flex-col tw-shrink tw-items-center tw-rounded-full tw-bg-rose-500 hover:tw-bg-rose-700 tw-text-white tw-px-8 tw-py-4" rel="noopener noreferrer">
+		<div class="tw:my-10 tw:w-full tw:flex tw:justify-around tw:items-start">
+			<NuxtLinkLocale to="/" class="tw:self-stretch tw:flex-col tw:shrink tw:items-center tw:rounded-full tw:bg-rose-500 tw:hover:bg-rose-700 tw:text-white tw:px-8 tw:py-4" rel="noopener noreferrer">
 				トップに戻る
-			</NuxtLink>
+			</NuxtLinkLocale>
 		</div>
 	</main>
 </template>
