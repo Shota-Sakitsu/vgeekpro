@@ -2,6 +2,8 @@
 import type {LiveStream, LiveStreamArchive, LiveStreamSchedule, VideoItem} from "~/composables/youtubeApi/Types";
 
 const {locale, t} = useI18n();
+const calendar = useCookie("intl-calendar");
+const hour24 = useCookie("intl-24clock");
 
 type VideoCardAttribute = {
 	videoItem: VideoItem;
@@ -36,45 +38,24 @@ const typeIconClass = computed(() => {
 const intervalString = (from: Date | number, to: Date | number = new Date(), type: 0 | 1 = 0): string => {
 	if (typeof from === "number") from = new Date(from);
 	if (typeof to === "number") to = new Date(to);
-	const diff = to.getTime() - from.getTime();
+	const diff = Math.abs(to.getTime() - from.getTime());
 	const diffAxis = (to.getTime() > from.getTime()) ? 1 : (to.getTime() == from.getTime() ? 0 : -1);
-	let diffBuffer = Math.abs(diff);
-	let diffStr = "";
-	if (diffBuffer >= 31556952000) {
-		// 年 (31556952秒 ＝ 365.2425日 ≒ 1年)
-		const year = Math.floor(diffBuffer / 31556952000);
-		diffBuffer %= 31556952000;
-		diffStr += t(`videoListBox.year${year >= 2 ? 's' : ''}`).replace("%s", year.toString());
-	}
-	if (diffBuffer >= 2629746000) {
-		// 月 (2629746秒 ≒ 30.4369日 ≒ 1月)
-		const month = Math.floor(diffBuffer / 2629746000);
-		diffBuffer %= 2629746000;
-		diffStr += t(`videoListBox.month${month >= 2 ? 's' : ''}`).replace("%s", month.toString());
-	}
-	if (diffBuffer >= 86400000) {
-		// 日 (86400秒 ＝ 1日)
-		const day = Math.floor(diffBuffer / 86400000);
-		diffBuffer %= 86400000;
-		diffStr += t(`videoListBox.day${day >= 2 ? 's' : ''}`).replace("%s", day.toString());
-	}
-	if (diffBuffer >= 3600000) {
-		// 時間 (3600秒 ＝ 1時間)
-		const hour = Math.floor(diffBuffer / 3600000);
-		diffBuffer %= 3600000;
-		diffStr += t(`videoListBox.hour${hour >= 2 ? 's' : ''}`).replace("%s", hour.toString());
-	}
-	if (diffBuffer >= 60000) {
-		// 分 (60秒 ＝ 1分)
-		const minute = Math.floor(diffBuffer / 60000);
-		diffBuffer %= 60000;
-		diffStr += t(`videoListBox.minute${minute >= 2 ? 's' : ''}`).replace("%s", minute.toString().padStart(2, '0'));
-	}
-	if (diffBuffer >= 500) {
-		// 秒(1秒)
-		const second = Math.round(diffBuffer / 1000);
-		diffStr += t(`videoListBox.second${second >= 2 ? 's' : ''}`).replace("%s", second.toString().padStart(2, '0'));
-	}
+	// この仕様が新しすぎて、ts-ignoreを消すとエラーが出ます（汗）
+	// @ts-ignore
+	const formatter = new Intl.DurationFormat(locale.value, {style: "short"})
+	const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.2425));
+	const months = Math.floor(diff % (1000 * 60 * 60 * 24 * 365.2425) / (1000 * 60 * 60 * 24 * 365.2425 / 12));
+	const days = Math.floor(diff % (1000 * 60 * 60 * 24 * 365.2425 / 12) / (1000 * 60 * 60 * 24));
+	const hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+	const minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+	// @ts-ignore
+	const diffStr: string = formatter.format({
+		years,
+		months,
+		days,
+		hours,
+		minutes,
+	})
 	switch (diffAxis) {
 		case 1:
 			return t(`videoListBox.${type == 0 ? "elapsed" : "ago"}`).replace("%s", diffStr);
@@ -84,6 +65,16 @@ const intervalString = (from: Date | number, to: Date | number = new Date(), typ
 			return t('videoListBox.justNow');
 	}
 }
+
+const dateTimeFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
+	calendar: calendar.value ?? "gregory",
+	hour12: !(hour24.value ?? true),
+	year: "numeric",
+	month: "2-digit",
+	day: "2-digit",
+	hour: "2-digit",
+	minute: "2-digit",
+}));
 </script>
 
 <template>
@@ -104,19 +95,19 @@ const intervalString = (from: Date | number, to: Date | number = new Date(), typ
 						<small class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary text-truncate text-truncate-2">{{ videoItem.channelTitle }}</small><br>
 						<small class="mt-2 description-text text-secondary flex-shrink-1 flex-grow-0">
 							<span v-if="videoType == 'upcoming'">
-								<span class="video-card-time">{{ t("videoListBox.scheduledAt").replace("%s", new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span><br>
+								<span class="video-card-time">{{ t("videoListBox.scheduledAt").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime))) }}</span><br>
 								<span class="video-card-time">{{ intervalString(new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime)) }}</span>
 							</span>
 							<span v-else-if="videoType == 'live'">
-								<span class="video-card-time">{{ t("videoListBox.from").replace("%s", new Date((videoItem as LiveStream).liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span><br>
+								<span class="video-card-time">{{ t("videoListBox.from").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStream).liveActualStartTime))) }}</span><br>
 								<span class="video-card-time">{{ intervalString(new Date((videoItem as LiveStream).liveActualStartTime)) }}</span>
 							</span>
 							<span v-else-if="videoType == 'archive'">
-								<span class="video-card-time">{{ t("videoListBox.from").replace("%s", new Date((videoItem as LiveStreamArchive).liveActualStartTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span><br>
-								<span class="video-card-time">{{ t("videoListBox.to").replace("%s", new Date((videoItem as LiveStreamArchive).liveActualEndTime).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
+								<span class="video-card-time">{{ t("videoListBox.from").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStreamArchive).liveActualStartTime))) }}</span><br>
+								<span class="video-card-time">{{ t("videoListBox.to").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStreamArchive).liveActualEndTime))) }}</span>
 							</span>
 							<span v-else>
-								<span class="video-card-time">{{ t("videoListBox.postedAt").replace("%s", new Date(videoItem.publishedAt).toLocaleString(locale, {year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"})) }}</span>
+								<span class="video-card-time">{{ t("videoListBox.postedAt").replace("%s", dateTimeFormatter.format(new Date(videoItem.publishedAt))) }}</span>
 							</span>
 						</small>
 					</div>
@@ -127,26 +118,6 @@ const intervalString = (from: Date | number, to: Date | number = new Date(), typ
 </template>
 
 <style scoped lang="less">
-*[lang^="zh-Hant"i] {
-	font-family: "Noto Sans TC", sans-serif;
-}
-
-*[lang^="zh-Hans"i] {
-	font-family: "Noto Sans SC", sans-serif;
-}
-
-*[lang^="ko"i] {
-	font-family: "Noto Sans KR", sans-serif;
-}
-
-*[lang^="ja"i] {
-	font-family: "M PLUS 1", sans-serif;
-}
-
-*[lang^="en"i] {
-	font-family: "Roboto", sans-serif;
-}
-
 .video-card-time {
 	font-family: "M PLUS 1 Code", monospace;
 }

@@ -35,7 +35,7 @@
 		"shorts": "Shorts",
 		"allVideos": "Toutes les vidéos",
 		"apiPoweredBy": "API de liste de vidéos fournie par",
-		"listInformationText": "Veuillez noter que le compte à rebours avant l'heure de début et le temps écoulé des diffusions peuvent différer des valeurs habituelles après environ un mois.\nCeci est dû au fait qu'une année est calculée comme <math><mn>365.2425</mn></math> jours (le nombre moyen de jours dans le calendrier grégorien), et qu'un mois est défini comme <math><mfrac><mi>1</mi><mi>12</mi></mfrac></math> de cette valeur.\nDe plus, veuillez noter que le temps écoulé est mis à jour au moment de la récupération des informations, ce qui peut différer de l'heure de la dernière mise à jour.",
+		"listInformationText": "Veuillez noter que le compte à rebours avant l'heure de début et le temps écoulé des diffusions peuvent différer des valeurs habituelles après environ un mois.\nCeci est dû au fait qu'une année est calculée comme <math><mn>365.2425</mn></math> jours (le nombre moyen de jours dans le calendrier grégorien), et qu'un mois est défini comme <math><mfrac><mi>1</mi><mi>12</mi></mfrac></math> de cette valeur.",
 		"from": "Commence %s",
 		"to": "Termine %s",
 		"postedAt": "Publié %s",

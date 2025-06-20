@@ -21,47 +21,53 @@ const config = useRuntimeConfig();
 const youtubeAPI = new YouTubeAPI(config.public.YT_API_VERSION2)
 
 const props = defineProps<VideoMemberAttributes>();
-const profileIds = props.members.map(e => e.profileId);
+const profileIds = computed(() => props.members.map(e => e.profileId));
 
 const tabs = computed<{ [tabId: string | symbol]: VideoTab }>(() => {
 	return {
 		schedule: {
 			label: "videoListBox.scheduled",
 			type: "schedule",
-			url: youtubeAPI.getSearchApiEndpoint({members: profileIds, type: "liveBefore"}),
+			url: youtubeAPI.getSearchApiEndpoint({members: profileIds.value, type: "liveBefore"}),
 			isShorts: false,
 			icon: "mdi mdi-calendar-star",
 		},
 		live: {
 			label: "videoListBox.live",
 			type: "live",
-			url: youtubeAPI.getSearchApiEndpoint({members: profileIds, type: "liveNow"}),
+			url: youtubeAPI.getSearchApiEndpoint({members: profileIds.value, type: "liveNow"}),
 			isShorts: false,
 			icon: "mdi mdi-video-wireless",
 		},
 		archive: {
 			label: "videoListBox.archive",
 			type: "archive",
-			url: youtubeAPI.getSearchApiEndpoint({members: profileIds, type: "liveAfter", order: "desc"}),
+			url: youtubeAPI.getSearchApiEndpoint({members: profileIds.value, type: "liveAfter", order: "desc"}),
 			isShorts: false,
 			icon: "mdi mdi-archive",
 		},
 		video: {
 			label: "videoListBox.video",
 			type: "video",
-			url: youtubeAPI.getSearchApiEndpoint({members: profileIds, type: "video", isShorts: TriState.No, order: "desc"}),
+			url: youtubeAPI.getSearchApiEndpoint({members: profileIds.value, type: "video", isShorts: TriState.No, order: "desc"}),
 			isShorts: false,
 			icon: "mdi mdi-video",
 		},
 		shorts: {
 			label: "videoListBox.shorts",
 			type: "shorts",
-			url: youtubeAPI.getSearchApiEndpoint({members: profileIds, type: "video", isShorts: TriState.Yes, order: "desc"}),
+			url: youtubeAPI.getSearchApiEndpoint({members: profileIds.value, type: "video", isShorts: TriState.Yes, order: "desc"}),
 			isShorts: true,
 			icon: "mdi mdi-cellphone-play",
 		},
 	};
 });
+
+watch(profileIds, () => {
+	for (const updateKey in updateKeys.value) {
+		updateKeys.value[updateKey]++;
+	}
+})
 
 const lastFetched = toRef(new Date(0));
 const fetchSlice = toRef(0);

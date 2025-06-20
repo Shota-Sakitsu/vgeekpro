@@ -1,15 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+.set-default-font(@sans; @serif; @mono; @default) when (@default = "sans") {
+	&, & * {
+		font-family: @sans, sans-serif;
+	}
+}
+
+.set-default-font(@sans; @serif; @mono; @default) when (@default = "serif") {
+	&, & * {
+		font-family: @serif, serif;
+	}
+}
+
+.set-default-font(@sans; @serif; @mono; @default) when (@default = "mono") {
+	&, & * {
+		font-family: @mono, monospace;
+	}
+}
+
+
+.set-font-for-lang(@lang; @sans; @serif; @mono; @default: sans) {
+	[lang^=@{lang} i] {
+		*&, & {
+			.set-default-font(@sans; @serif; @mono; @default);
+
+			&.font, & .font {
+				&-sans, &-sans {
+					font-family: @sans, sans-serif;
+				}
+
+				&-serif, &-serif {
+					font-family: @serif, serif;
+				}
+
+				&-mono, &-mono {
+					font-family: @mono, monospace;
+				}
+			}
+		}
+
+		& code, & pre, & kbd, & samp,
+		code&, pre&, kbd&, samp& {
+			font-family: @mono, monospace;
+		}
+	}
+
+}
+
+.set-font-for-lang("en"; "Roboto"; "Noto Serif"; "IBM Plex Mono"; "sans");
+.set-font-for-lang("fr"; "Roboto"; "Noto Serif"; "IBM Plex Mono"; "sans");
+.set-font-for-lang("ja"; "M PLUS 1"; "Noto Serif JP"; "M PLUS 1 Code"; "sans");
+.set-font-for-lang("ko"; "Noto Sans KR"; "Noto Serif KR"; "Noto Sans Mono CJK KR"; "sans");
+.set-font-for-lang("zh-Hans"; "Noto Sans SC"; "Noto Serif SC"; "Noto Sans Mono CJK SC"; "sans");
+.set-font-for-lang("zh-Hant"; "Noto Sans TC"; "Noto Serif TC"; "Noto Sans Mono CJK TC"; "sans");
 
 .font-inter {
 	font-family: 'Inter', sans-serif;
 	font-weight: 400;
 	font-style: normal;
 	font-optical-sizing: auto;
+}
+
+.font-slogan {
+	font-family: "Noto Serif JP", serif;
 }

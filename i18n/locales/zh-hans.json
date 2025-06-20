@@ -35,7 +35,7 @@
 		"shorts": "短视频",
 		"allVideos": "所有视频",
 		"apiPoweredBy": "视频列表 API 提供方",
-		"listInformationText": "请注意，距离开始时间的倒计时和直播经过时间，在一个月左右之后可能会计算出与通常值不同的数值。\n这是因为一年按 <math><mn>365.2425</mn></math> 天（格里高利历的平均天数）计算，一个月则设为其 <math><mfrac><mi>1</mi><mi>12</mi></mfrac></math> 的值。\n此外，经过时间是在获取信息时更新的。这与最后更新时间不同，敬请注意。",
+		"listInformationText": "请注意，距离开始时间的倒计时和直播经过时间，在一个月左右之后可能会计算出与通常值不同的数值。\n这是因为一年按 <math><mn>365.2425</mn></math> 天（格里高利历的平均天数）计算，一个月则设为其 <math><mfrac><mi>1</mi><mi>12</mi></mfrac></math> 的值。",
 		"from": "%s 开始",
 		"to": "%s 结束",
 		"postedAt": "%s 发布",

@@ -35,7 +35,7 @@
 		"shorts": "Shorts",
 		"allVideos": "All Videos",
 		"apiPoweredBy": "Video List API provided by",
-		"listInformationText": "Please note that the countdown to the start time and the elapsed time of streams may differ from typical values after about a month has passed.\nThis is because a year is calculated as <math><mn>365.2425</mn></math> days (the average number of days in the Gregorian calendar), and a month is set as <math><mfrac><mi>1</mi><mi>12</mi></mfrac></math> of that value.\nAlso, please be aware that the elapsed time is updated when the information is retrieved, which may differ from the last updated time.",
+		"listInformationText": "Please note that the countdown to the start time and the elapsed time of streams may differ from typical values after about a month has passed.\nThis is because a year is calculated as <math><mn>365.2425</mn></math> days (the average number of days in the Gregorian calendar), and a month is set as <math><mfrac><mi>1</mi><mi>12</mi></mfrac></math> of that value.",
 		"from": "Starts %s",
 		"to": "Ends %s",
 		"postedAt": "Posted %s",
