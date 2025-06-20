@@ -104,8 +104,24 @@ if (locale.value != "ja") description = "‘I'm an engineer wolf who wants to be
 					<tr>
 						<td class="tw:pe-8 tw:xl:pe-16 tw:pb-4 tw:align-top">身長</td>
 						<td class="tw:pb-4 tw:align-top">
-							平常時:
-							<LocaleHeight :height="167.9" original-unit="centimeter"/>
+							<div class="d-flex flex-row">
+								<span class="my-auto me-2">
+									<span class="height-list-justify justify me-1">通常・黒化時</span>
+									<span class="me-1">:</span>
+								</span>
+								<div class="d-flex flex-column">
+									<LocaleHeight :height="167.9" original-unit="centimeter"/>
+								</div>
+							</div>
+							<div class="d-flex flex-row">
+								<span class="my-auto me-2">
+									<span class="height-list-justify justify me-1">覚醒時</span>
+									<span class="me-1">:</span>
+								</span>
+								<div class="d-flex flex-column">
+									<LocaleHeight :height="146.5" original-unit="centimeter"/>
+								</div>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -119,8 +135,25 @@ if (locale.value != "ja") description = "‘I'm an engineer wolf who wants to be
 					<tr>
 						<td class="tw:pe-8 tw:xl:pe-16 tw:pb-4 tw:align-top">ハッシュタグ</td>
 						<td class="tw:pb-4 tw:align-top">
-							配信タグ: <a href="https://x.com/hashtag/WolframiumV" rel="noopener noreferrer" target="_blank">#WolframiumV</a> <br/>
-							ファンアートタグ: <a href="https://x.com/hashtag/クロム族あーと" rel="noopener noreferrer" target="_blank">#クロム族あーと</a> / <a href="https://x.com/hashtag/ChromiumArts" rel="noopener noreferrer" target="_blank">#ChromiumArts</a>
+							<div class="d-flex flex-row">
+								<span class="my-auto me-2">
+									<span class="tag-list-justify justify me-1">配信タグ</span>
+									<span class="me-1">:</span>
+								</span>
+								<div class="d-flex flex-column">
+									<a href="https://x.com/hashtag/WolframiumV" rel="noopener noreferrer" target="_blank">#WolframiumV</a><br/>
+								</div>
+							</div>
+							<div class="d-flex flex-row">
+								<span class="my-auto me-2">
+									<span class="tag-list-justify justify me-1">ファンアートタグ</span>
+									<span class="me-1">:</span>
+								</span>
+								<div class="d-flex flex-column">
+									<a href="https://x.com/hashtag/クロム族あーと" rel="noopener noreferrer" target="_blank">#クロム族あーと</a>
+									<a href="https://x.com/hashtag/ChromiumArts" rel="noopener noreferrer" target="_blank">#ChromiumArts</a>
+								</div>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -137,3 +170,20 @@ if (locale.value != "ja") description = "‘I'm an engineer wolf who wants to be
 		</section>
 	</section>
 </template>
+
+<style scoped>
+.justify {
+	display: inline-block;
+	text-align: justify;
+	text-align-last: justify;
+	text-justify: inter-character;
+}
+
+.height-list-justify {
+	width: 6.2ic;
+}
+
+.tag-list-justify {
+	width: 8.5ic;
+}
+</style>
