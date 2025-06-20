@@ -316,6 +316,16 @@ const members: Member[] = [
 			"member"
 		],
 	},
+	{
+		name: "狐炎尾",
+		yomi: "Kitune Enbi",
+		profileId: "kitune_enbi",
+		imageId: "kitune_enbi",
+		imageAlt: "Kitune Enbi",
+		tag: [
+			"member"
+		],
+	},
 ];
 
 type Unit = {
