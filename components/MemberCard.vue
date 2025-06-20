@@ -15,7 +15,7 @@ const props = defineProps<MemberCardAttributes>();
 </script>
 
 <template>
-	<section class="tw:items-center d-flex flex-column" :id="`member-card-${props.profileId}`">
+	<section class="tw:items-center d-flex flex-column" :id="`member-card-${props.profileId.replaceAll('_', '-')}`">
 		<UpperBodyImage :alt="props.imageAlt" :isDisableMarginTopExpand="true" :memberId="props.imageId"/>
 		<div class="tw:leading-loose tw:text-black d-flex flex-column flex-grow-1 mb-4">
 			<p class="font-slogan tw:text-center font-size my-auto" v-text="locale == 'ja' ? props.name : props.yomi"></p>

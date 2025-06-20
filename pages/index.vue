@@ -508,17 +508,22 @@ onMounted(async () => {
 		const element = document.getElementById(elementId)
 
 		console.log(elementId, element)
-		console.time("Scroll")
+		console.time("scroll")
 
-		setTimeout(() => {
+		const handler = (time: number = 0) => {
 			if (element) {
 				element.scrollIntoView({
 					behavior: "smooth",
 					block: "center",
 				})
-				console.timeEnd("Scroll")
+				console.timeEnd("scroll")
+			} else {
+				if ((Date.now() - time) < 2500) {
+					setTimeout(handler, 15, time);
+				}
 			}
-		}, 0);
+		};
+		setTimeout(handler, 15, Date.now());
 	}
 })
 </script>
