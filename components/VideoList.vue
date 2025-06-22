@@ -117,13 +117,13 @@ const printMedia = useMediaQuery('print');
 </script>
 
 <template>
-	<section class="list-container tw:h-[400px] tw:my-3">
-		<div v-if="isStart === false && memberVideo.results.recode.resultCounts !== 0" :class="`video-list-container-${props.currentKey} tw:leading-loose tw:text-black tw:flex tw:flex-row tw:h-full tw:overflow-x-auto scrollbar`">
+	<section class="list-container tw:my-3">
+		<div v-if="isStart === false && memberVideo.results.recode.resultCounts !== 0" :class="`video-list-container-${props.currentKey} tw:leading-loose tw:text-black video-list-body tw:h-full tw:overflow-x-auto scrollbar`">
 			<VideoCard v-for="videoItem in memberVideo.items" :key="videoItem.videoId" :video-item="videoItem"/>
 		</div>
-		<div v-else-if="!isStart && memberVideo.results.recode.resultCounts === 0" class="tw:leading-loose tw:flex tw:flex-row tw:h-full tw:items-center tw:justify-center ">
+		<div v-else-if="!isStart && memberVideo.results.recode.resultCounts === 0" class="tw:leading-loose video-list-body tw:h-full tw:items-center tw:justify-center ">
 		</div>
-		<div v-else-if="!props.alreadyInitialized" class="tw:leading-loose tw:text-black tw:flex tw:flex-row tw:h-full tw:overflow-x-clip scrollbar">
+		<div v-else-if="!props.alreadyInitialized" class="tw:leading-loose tw:text-black video-list-body tw:h-full tw:overflow-x-clip scrollbar">
 			<div v-for="(color, num) in placeholderColors" :key="num" class="tw:h-full tw:mx-2">
 				<BCard :class="`video-list-card tw:h-full${props.isShorts ? ' shorts' : ''} border-${color} ${((reduceMotion || printMedia) ? '' : ' placeholder-wave')}`">
 					<template v-slot:img>
@@ -150,7 +150,8 @@ const printMedia = useMediaQuery('print');
 <style lang="less" scoped>
 .list-container {
 	container-type: size;
-	width: 100cqw
+	width: 100cqw;
+	height: 400px;
 }
 
 .video-title {
@@ -183,6 +184,11 @@ const printMedia = useMediaQuery('print');
 	font-size: 12pt;
 }
 
+.video-list-body {
+	display: flex;
+	flex-direction: row;
+}
+
 .video-list-card {
 	width: calc(calc(100cqw / 1.5) - 1rem);
 }
@@ -201,6 +207,9 @@ const printMedia = useMediaQuery('print');
 }
 
 @container (width <= 768px) {
+	.video-list-body {
+		flex-direction: column;
+	}
 	.shorts {
 		&.video-list-card {
 			flex-direction: column;

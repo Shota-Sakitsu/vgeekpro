@@ -613,7 +613,7 @@ onMounted(async () => {
 									</div>
 								</div>
 							</div>
-							<div class="tw:w-full tw:px-[30px]">
+							<div class="tw:w-full">
 								<VideoListBox :members="displayMembers"/>
 							</div>
 							<div

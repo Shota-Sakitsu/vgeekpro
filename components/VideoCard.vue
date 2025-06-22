@@ -78,33 +78,33 @@ const dateTimeFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
 </script>
 
 <template>
-	<div class="tw:h-full tw:mx-2" :lang="videoItem.defaultLanguage">
-		<a :key="videoItem.videoId" :href="videoItem.url" class="tw:h-full disable-link-icons">
-			<BCard :class="`video-list-card tw:h-full${videoItem.isShorts ? ' shorts' : ''}`" :style="`border-color: ${ videoItem.thumbnailColor.hexadecimal };`" body-class="video-list-card-body">
+	<div class="video-card-container" :lang="videoItem.defaultLanguage">
+		<a :key="videoItem.videoId" :href="videoItem.url" class="disable-link-icons">
+			<BCard :class="`video-list-card${videoItem.isShorts ? ' shorts' : ''}`" :style="`border-color: ${ videoItem.thumbnailColor.hexadecimal }`" body-class="video-list-card-body">
 				<template v-slot:img>
-					<img v-if="Object.keys(videoItem.thumbnails).length == 0" :alt="videoItem.title" :class="`thumbnail ${imageLoaded ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" loading="lazy" @load="imageLoaded = true"/>
-					<img v-else :alt="videoItem.title" :class="`thumbnail ${imageLoaded ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" :srcset="Object.values(videoItem.thumbnails).map<string>(value => `${value.url} ${value.width}w`).join(',')" loading="lazy" @load="imageLoaded = true"/>
-					<div v-if="!imageLoaded" :class="`thumbnail placeholder-wave placeholder`" :style="`background: ${videoItem.thumbnailColor.hexadecimal};`"></div>
+					<img aria-hidden="true" v-if="Object.keys(videoItem.thumbnails).length == 0" :alt="videoItem.title" :class="`thumbnail ${imageLoaded ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" loading="lazy" @load="imageLoaded = true"/>
+					<img aria-hidden="true" v-else :alt="videoItem.title" :class="`thumbnail ${imageLoaded ? '' : 'loading'} ${videoItem.isShorts ? ' img-fluid rounded-start' : ' rounded-top'}`" :src="videoItem.thumbnail" :srcset="Object.values(videoItem.thumbnails).map<string>(value => `${value.url} ${value.width}w`).join(',')" loading="lazy" @load="imageLoaded = true"/>
+					<div aria-hidden="true" v-if="!imageLoaded" :class="`thumbnail placeholder-wave placeholder`" :style="`background: ${videoItem.thumbnailColor.hexadecimal};`"></div>
 				</template>
 				<template v-slot:default>
 					<div class="d-flex flex-column h-100">
 						<p class="flex-grow-0 tw:text-sm video-title text-truncate text-truncate-3">
 							<i :class="typeIconClass"></i>
-							{{ videoItem.title }}
+							<span :id="`video-card-title:${videoItem.videoId}`" v-text="videoItem.title"/>
 						</p>
 						<small class="flex-shrink-1 flex-grow-0 channel-name mt-auto description-text text-secondary text-truncate text-truncate-2">{{ videoItem.channelTitle }}</small><br>
 						<small class="mt-2 description-text text-secondary flex-shrink-1 flex-grow-0">
 							<span v-if="videoType == 'upcoming'">
-								<span class="video-card-time">{{ t("videoListBox.scheduledAt").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime))) }}</span><br>
+								<span class="video-card-time" v-html='t("videoListBox.scheduledAt").replace("%s", `<time datetime="${new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime).toISOString()}">${dateTimeFormatter.format(new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime))}</time>`)'></span><br>
 								<span class="video-card-time">{{ intervalString(new Date((videoItem as LiveStreamSchedule).liveScheduledStartTime)) }}</span>
 							</span>
 							<span v-else-if="videoType == 'live'">
-								<span class="video-card-time">{{ t("videoListBox.from").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStream).liveActualStartTime))) }}</span><br>
+								<span class="video-card-time" v-html='t("videoListBox.from").replace("%s", `<time datetime="${new Date((videoItem as LiveStream).liveActualStartTime).toISOString()}">${dateTimeFormatter.format(new Date((videoItem as LiveStream).liveActualStartTime))}</time>`)'></span><br>
 								<span class="video-card-time">{{ intervalString(new Date((videoItem as LiveStream).liveActualStartTime)) }}</span>
 							</span>
 							<span v-else-if="videoType == 'archive'">
-								<span class="video-card-time">{{ t("videoListBox.from").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStreamArchive).liveActualStartTime))) }}</span><br>
-								<span class="video-card-time">{{ t("videoListBox.to").replace("%s", dateTimeFormatter.format(new Date((videoItem as LiveStreamArchive).liveActualEndTime))) }}</span>
+								<span class="video-card-time" v-html='t("videoListBox.from").replace("%s", `<time datetime="${new Date((videoItem as LiveStreamArchive).liveActualStartTime).toISOString()}">${dateTimeFormatter.format(new Date((videoItem as LiveStreamArchive).liveActualStartTime))}</time>`)'></span><br>
+								<span class="video-card-time" v-html='t("videoListBox.to").replace("%s", `<time datetime="${new Date((videoItem as LiveStreamArchive).liveActualEndTime).toISOString()}">${dateTimeFormatter.format(new Date((videoItem as LiveStreamArchive).liveActualEndTime))}</time>`)'></span><br>
 							</span>
 							<span v-else>
 								<span class="video-card-time">{{ t("videoListBox.postedAt").replace("%s", dateTimeFormatter.format(new Date(videoItem.publishedAt))) }}</span>
@@ -197,6 +197,15 @@ const dateTimeFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
 	width: calc(calc(100cqw / 1.5) - 1rem);
 }
 
+.video-card-container {
+	width: inherit;
+	height: 100%;
+	padding-inline: 0;
+	padding-block: calc(var(--tw-spacing) * 2);
+	margin-inline: calc(var(--tw-spacing) * 2);
+	margin-block: 0;
+}
+
 .shorts {
 	&.video-list-card {
 		width: calc(calc(100cqw / 2.5) - 1rem);
@@ -243,6 +252,26 @@ const dateTimeFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
 	}
 }
 
+@container (300px <= width < 500px) {
+	.thumbnail {
+		aspect-ratio: 22/9;
+		width: 100%;
+		height: fit-content;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+
+@container (500px <= width <= 768px) {
+	.thumbnail {
+		aspect-ratio: 22/6;
+		width: 100%;
+		height: fit-content;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+
 @container (width >= 768px) {
 	.video-list-card {
 		width: calc(calc(100cqw / 3.5) - 1rem);
@@ -250,6 +279,36 @@ const dateTimeFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
 		&.shorts {
 			width: calc(calc(100cqw / 1.75) - 1rem);
 		}
+	}
+}
+
+@container (width <= 768px) {
+	.video-list-card,
+	.shorts.video-list-card {
+		width: 100%;
+	}
+
+	.video-card-container {
+		width: 100%;
+		padding-inline: calc(var(--tw-spacing) * 2);
+		padding-block: 0;
+		margin-inline: 0;
+		margin-block: calc(var(--tw-spacing) * 2);
+	}
+}
+
+@container (width > 768px) {
+	.video-list-card,
+	.shorts.video-list-card {
+		height: 100%;
+	}
+
+	.video-card-container {
+		height: 100%;
+		padding-inline: 0;
+		padding-block: calc(var(--tw-spacing) * 2);
+		margin-inline: calc(var(--tw-spacing) * 2);
+		margin-block: 0;
 	}
 }
 

@@ -194,16 +194,11 @@ const infoModal = toRef(false);
 
 <style>
 .video-list-wrapper {
-	container-type: inline-size;
 	height: fit-content;
 }
 
 .tab-content {
 	background: #ffffff;
-	container-type: inline-size;
-}
-
-.tab-pane {
 	container-type: inline-size;
 }
 </style>
