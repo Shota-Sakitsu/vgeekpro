@@ -14,6 +14,19 @@ const localeUpdate = () => {
 	setLocale(selectedDialect.value);
 }
 
+const localeIcon = {
+	"ja": "\u{1F1EF}\u{1F1F5}",
+	"ja-JP-x-dialect-kansai": "\u{1F1EF}\u{1F1F5}",
+	"ja-JP-x-dialect-northkyushu": "\u{1F1EF}\u{1F1F5}",
+	"ja-JP-x-dialect-ryukyu": "\u{1F1EF}\u{1F1F5}",
+	"en-GB": "\u{1F1EC}\u{1F1E7}",
+	"en-US": "\u{1F1FA}\u{1F1F8}",
+	"fr-FR": "\u{1F1EB}\u{1F1F7}",
+	"zh-Hans": "简",
+	"zh-Hant": "繁",
+	"ko": "\u{1F1F0}\u{1F1F7}",
+};
+
 const localeShortName = {
 	"ja": "日本",
 	"ja-JP-x-dialect-kansai": "関西",
@@ -25,7 +38,8 @@ const localeShortName = {
 	"zh-Hans": "简体",
 	"zh-Hant": "繁體",
 	"ko": "한국",
-}
+};
+
 const localeSetModal = toRef(false);
 
 const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
@@ -371,7 +385,10 @@ const currentPreviewTranslations = computed(() => {
 				</div>
 				<div class="tw:xl:ms-6 me-2 tw:flex tw:flex-auto tw:shrink tw:text-stone-900 tw:text-xs tw:xl:text-base tw:pointer-events-auto">
 					<button class="tw:px-5 tw:py-2 tw:rounded-full tw:border-white tw:border-s-2 tw:border-y-2 tw:cursor-pointer tw:bg-white/75 tw:hover:text-white tw:hover:bg-rose-500/75" type="button" @click.stop="localeSetModal = !localeSetModal">
-						<span>{{ localeShortName[locale] }}</span>
+						<span>
+							<span class="d-inline-block text-center border-secondary rounded-pill me-1" style="border: solid 1px; width: calc(1.5ic + 2px);">{{ localeIcon[locale] }}</span>
+							<span class="d-inline-block text-center ms-1" style="width: 2.2ic;">{{ localeShortName[locale] }}</span>
+						</span>
 						<teleport to="body">
 							<BModal v-model="localeSetModal" @ok="localeUpdate" :ok-only="true" :title="`Select language`" title-class="fs-5 tw:text-stone-900" size="xl" lang="zxx">
 								<div class="tw:flex tw:flex-col tw:text-stone-900">
