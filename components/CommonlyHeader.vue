@@ -313,7 +313,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		clockLongFormat: "Format de l'heure longue",
 	},
 	"zh-Hans": {
-		selectDialect: "选择简体/繁体字符",
+		selectDialect: "字體選擇 / 字体选择",
 		selectUnit: "选择单位",
 		unitMetre: "公制系统",
 		unitImperial: "英制和磅制系统",
@@ -323,7 +323,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		clockLongFormat: "长时间格式",
 	},
 	"zh-Hant": {
-		selectDialect: "選擇繁體或簡體字",
+		selectDialect: "字体选择 / 字體選擇",
 		selectUnit: "選擇單位",
 		unitMetre: "公制系統",
 		unitImperial: "英磅系統",
