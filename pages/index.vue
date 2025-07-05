@@ -534,10 +534,10 @@ onMounted(async () => {
 
 		<div id="home" class="tw:overflow-hidden tw:relative tw:w-full tw:h-svh tw:xl:h-svh">
 			<div class="tw:relative tw:w-[400svw] tw:left-[-150svw] tw:xl:left-0 tw:xl:w-full tw:h-full">
-				<div
+				<div aria-hidden="true"
 					class="tw:z-10 tw:relative tw:w-full tw:h-svh tw:bg-gradient-to-b tw:from-transparent tw:from-40% tw:xl:from-60% tw:to-stone-900">
 				</div>
-				<img alt="top illust" class="tw:object-contain tw:xl:object-cover" src="/images/topillust.webp"
+				<img aria-hidden="true" alt="top illust" class="tw:object-contain tw:xl:object-cover" src="/images/topillust.png"
 					 style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent">
 				<div
 					class="tw:z-20 tw:absolute tw:ps-[3vw] tw:w-full tw:bottom-14 tw:whitespace-nowrap tw:text-center tw:text-[6vw] font-slogan">
