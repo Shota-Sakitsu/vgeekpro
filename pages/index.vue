@@ -548,9 +548,7 @@ onMounted(async () => {
 
 		<section id="about" class="bg-maze tw:w-full">
 			<div class="tw:relative tw:bg-gradient-to-b tw:from-stone-600 tw:from-60%">
-				<div class="tw:z-0 tw:absolute tw:top-40 tw:xl:top-28 tw:overflow-hidden tw:w-full">
-					<VGeekMarquee/>
-				</div>
+				<VGeekMarquee/>
 				<div class="tw:z-10 tw:relative tw:flex tw:flex-col tw:xl:flex-row tw:justify-center tw:items-center">
 					<section class="tw:px-10 tw:xl:px-14 tw:py-14 tw:text-base">
 						<section>

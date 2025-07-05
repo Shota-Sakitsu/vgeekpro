@@ -3,9 +3,7 @@
 	<main id="main-contents" class="tw:pt-40 tw:w-full tw:flex tw:flex-col tw:items-center">
 		<section id="about" class="bg-maze tw:w-full">
 			<div class="tw:relative tw:bg-gradient-to-b tw:from-stone-600 tw:from-60%">
-				<div class="tw:z-0 tw:absolute tw:top-40 tw:xl:top-28 tw:overflow-hidden tw:w-full">
-					<VGeekMarquee/>
-				</div>
+				<VGeekMarquee/>
 				<div class="tw:z-10 tw:relative tw:flex tw:flex-col tw:xl:flex-row tw:justify-center tw:items-center">
 					<slot/>
 				</div>
