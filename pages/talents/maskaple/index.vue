@@ -44,7 +44,7 @@ useSeoMeta({
 			<SectionHeader :isDark="true" description="配信内容" title="Contents"/>
 			<div class="tw:mb-28 tw:leading-loose tw:xl:max-w-screen-sm tw:xl:mx-auto">
 				<ul class="tw:list-disc tw:ps-5">
-					<li>雑談配信 「Barますかぷる」(定期配信/毎週金曜20時～)</li>
+					<li>雑談配信 「Barますかぷる」(定期配信/毎週金曜19時半～)</li>
 					<li>Primitier実況配信 「吾輩はプリミティアンヤマネコになりたい」(不定期配信)</li>
 					<li>雀魂配信 「自棄っぱち麻雀」(不定期配信)</li>
 					<li>「インフラSE的ゆるふわIT解説」シリーズ(動画)</li>
@@ -83,7 +83,7 @@ useSeoMeta({
 						<td class="tw:pe-8 tw:xl:pe-16 tw:pb-4 tw:align-top">ハッシュタグ</td>
 						<td class="tw:pb-4 tw:align-top">
 							配信タグ: <a href="https://x.com/hashtag/ますかぷる" rel="noopener noreferrer" target="_blank">#ますかぷる</a> <br/>
-							ファンアートタグ: <a href="https://x.com/hashtag/Barますかぷる" rel="noopener noreferrer" target="_blank">#Barますかぷる</a><br/>
+							定期配信タグ: <a href="https://x.com/hashtag/Barますかぷる" rel="noopener noreferrer" target="_blank">#Barますかぷる</a><br/>
 							ファンアートタグ: <a href="https://x.com/hashtag/おやつびと絵巻" rel="noopener noreferrer" target="_blank">#おやつびと絵巻</a>
 						</td>
 					</tr>
