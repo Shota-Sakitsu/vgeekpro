@@ -526,6 +526,7 @@ onMounted(async () => {
 		setTimeout(handler, 15, Date.now());
 	}
 })
+const config = useRuntimeConfig();
 </script>
 
 <template>
@@ -537,7 +538,7 @@ onMounted(async () => {
 				<div aria-hidden="true"
 					class="tw:z-10 tw:relative tw:w-full tw:h-svh tw:bg-gradient-to-b tw:from-transparent tw:from-40% tw:xl:from-60% tw:to-stone-900">
 				</div>
-				<img aria-hidden="true" alt="top illust" class="tw:object-contain tw:xl:object-cover" src="/images/topillust.png"
+				<img aria-hidden="true" alt="top illust" class="tw:object-contain tw:xl:object-cover" loading="lazy" src="/images/topillust.png"
 					 style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent">
 				<div
 					class="tw:z-20 tw:absolute tw:ps-[3vw] tw:w-full tw:bottom-14 tw:whitespace-nowrap tw:text-center tw:text-[6vw] font-slogan">
@@ -750,7 +751,7 @@ onMounted(async () => {
 						<span class="fs-3">コントリビュータ</span>
 						<ul class="list-group">
 							<li class="list-group-item">
-								<span class="fs-4">うさねこらーじ</span>
+								<span class="fs-4 font-serif">うさねこらーじ</span>
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">主な貢献</li>
 									<li class="list-group-item">プロジェクトオーナー</li>
@@ -758,7 +759,7 @@ onMounted(async () => {
 								</ul>
 							</li>
 							<li class="list-group-item">
-								<span class="fs-4">羽山 祥樹</span>
+								<span class="fs-4 font-serif">羽山 祥樹</span>
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">主な貢献</li>
 									<li class="list-group-item">デザイン最適化</li>
@@ -766,7 +767,7 @@ onMounted(async () => {
 								</ul>
 							</li>
 							<li class="list-group-item">
-								<span class="fs-4">崎津 祥汰</span>
+								<span class="fs-4 font-serif">崎津 祥汰</span>
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">主な貢献</li>
 									<li class="list-group-item">新機能追加</li>
@@ -774,7 +775,7 @@ onMounted(async () => {
 								</ul>
 							</li>
 							<li class="list-group-item">
-								<span class="fs-4">参加タレントの皆様</span>
+								<span class="fs-4 font-serif">参加タレントの皆様</span>
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">主な貢献</li>
 									<li class="list-group-item">自己紹介の提供</li>
@@ -783,13 +784,21 @@ onMounted(async () => {
 								</ul>
 							</li>
 							<li class="list-group-item">
-								<span class="fs-4">Special Thanks</span>
+								<span class="fs-4 font-serif">Special Thanks</span>
 								<ul class="list-group">
 									<li class="list-group-item list-group-item-info">テストや応援などを行ってくださる</li>
 									<li class="list-group-item">各配信者のファンの皆様</li>
 									<li class="list-group-item">ふとした時に流れてきたリスナーの皆様</li>
 									<li class="list-group-item">このサイトや各チャンネル・ストリームにアクセスした皆様</li>
 								</ul>
+							</li>
+						</ul>
+					</div>
+					<div class="row" v-if="config.public.COMMIT_HASH != ''">
+						<span class="fs-3">バージョン情報</span>
+						<ul class="list-group">
+							<li class="list-group-item">
+								コミットハッシュ: <code v-text="config.public.COMMIT_HASH"/>
 							</li>
 						</ul>
 					</div>

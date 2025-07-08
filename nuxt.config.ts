@@ -1,5 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import viteTailwind from "@tailwindcss/vite";
+import * as child_process from "node:child_process";
+
+let commitHash = "";
+let shortCommitHash = "";
+
+const gitShow = child_process.spawnSync("git", ["show", "HEAD", "-s", "--format=%H"]);
+if (gitShow.error == undefined) {
+	commitHash = gitShow.stdout.toString().trim();
+	shortCommitHash = commitHash.slice(0, 7);
+} else {
+	console.warn(gitShow);
+}
 
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
@@ -104,6 +116,8 @@ export default defineNuxtConfig({
 			WEB_API: process.env.VUE_APP_WEB_API ?? "https://infra.virtlive.jp/ytapi/v1",
 			WEB_API_VERSION: process.env.VUE_APP_WEB_API_VERSION ?? "2",
 			YT_API_VERSION2: process.env.YT_API_VERSION2 ?? "https://infra.virtlive.jp/ytapi/v2.1",
+			COMMIT_HASH: commitHash,
+			SHORT_COMMIT_HASH: shortCommitHash,
 		},
 	},
 })
