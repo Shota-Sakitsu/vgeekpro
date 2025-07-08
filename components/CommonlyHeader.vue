@@ -15,16 +15,16 @@ const localeUpdate = () => {
 }
 
 const localeIcon = {
-	"ja": "\u{1F1EF}\u{1F1F5}",
-	"ja-JP-x-dialect-kansai": "\u{1F1EF}\u{1F1F5}",
-	"ja-JP-x-dialect-northkyushu": "\u{1F1EF}\u{1F1F5}",
-	"ja-JP-x-dialect-ryukyu": "\u{1F1EF}\u{1F1F5}",
-	"en-GB": "\u{1F1EC}\u{1F1E7}",
-	"en-US": "\u{1F1FA}\u{1F1F8}",
-	"fr-FR": "\u{1F1EB}\u{1F1F7}",
-	"zh-Hans": "简",
-	"zh-Hant": "繁",
-	"ko": "\u{1F1F0}\u{1F1F7}",
+	"ja": "<span class='font-emoji'>&#x1F1EF;&#x1F1F5;</span>",
+	"ja-JP-x-dialect-kansai": "<span>関</span>",
+	"ja-JP-x-dialect-northkyushu": "<span>九</span>",
+	"ja-JP-x-dialect-ryukyu": "<span>琉</span>",
+	"en-GB": "<span class='font-emoji'>&#x1F1EC;&#x1F1E7;</span>",
+	"en-US": "<span class='font-emoji'>&#x1F1FA;&#x1F1F8;</span>",
+	"fr-FR": "<span class='font-emoji'>&#x1F1EB;&#x1F1F7;</span>",
+	"zh-Hans": "<span>简</span>",
+	"zh-Hant": "<span>繁</span>",
+	"ko": "<span class='font-emoji'>&#x1F1F0;&#x1F1F7;</span>",
 };
 
 const localeShortName = {
@@ -150,7 +150,7 @@ const calenders = computed(() => {
 		value: v,
 	}));
 });
-const unitType = toRef("metric");
+const unitType = toRef("metre");
 const calender = toRef("gregory");
 const clock24h = toRef(true);
 const transitionDuration = computed(() => motionReduced.value ? 0 : 500);
@@ -239,6 +239,7 @@ type PreviewTranslation = {
 	use24Hour: string;
 	clockShortFormat: string;
 	clockLongFormat: string;
+	lengthFormat: string;
 }
 
 const previewTranslations: { [key: string]: PreviewTranslation } = {
@@ -251,6 +252,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "24時間表示にする",
 		clockShortFormat: "短い形式",
 		clockLongFormat: "長い形式",
+		lengthFormat: "長さの例",
 	},
 	"ja-JP-x-dialect-kansai": {
 		selectDialect: "方言の選択",
@@ -261,6 +263,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "24時間表示にする",
 		clockShortFormat: "短い形式",
 		clockLongFormat: "長い形式",
+		lengthFormat: "長さの例",
 	},
 	"ja-JP-x-dialect-northkyushu": {
 		selectDialect: "方言の選択",
@@ -271,6 +274,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "24時間表示にする",
 		clockShortFormat: "短い形式",
 		clockLongFormat: "長い形式",
+		lengthFormat: "長さの例",
 	},
 	"ja-JP-x-dialect-ryukyu": {
 		selectDialect: "方言の選択",
@@ -281,6 +285,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "24時間表示にする",
 		clockShortFormat: "短い形式",
 		clockLongFormat: "長い形式",
+		lengthFormat: "長さの例",
 	},
 	"en-GB": {
 		selectDialect: "Select dialect",
@@ -291,6 +296,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "Set 24-hour display",
 		clockShortFormat: "Short time format",
 		clockLongFormat: "Long time format",
+		lengthFormat: "Example lengths",
 	},
 	"en-US": {
 		selectDialect: "Select a dialect",
@@ -301,6 +307,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "Set 24-hour display",
 		clockShortFormat: "Short time format",
 		clockLongFormat: "Long time format",
+		lengthFormat: "Length Example",
 	},
 	"fr-FR": {
 		selectDialect: "Sélectionner le dialecte",
@@ -311,6 +318,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "Régler l'affichage sur 24 heures",
 		clockShortFormat: "Format de l'heure courte",
 		clockLongFormat: "Format de l'heure longue",
+		lengthFormat: "Exemple de longueurs",
 	},
 	"zh-Hans": {
 		selectDialect: "字體選擇 / 字体选择",
@@ -321,6 +329,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "设置 24 小时显示",
 		clockShortFormat: "短时间格式",
 		clockLongFormat: "长时间格式",
+		lengthFormat: "长度示例",
 	},
 	"zh-Hant": {
 		selectDialect: "字体选择 / 字體選擇",
@@ -331,6 +340,7 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "設定 24 小時顯示",
 		clockShortFormat: "短時間格式",
 		clockLongFormat: "長時間格式",
+		lengthFormat: "長度範例",
 	},
 	"ko": {
 		selectDialect: "방언 선택",
@@ -341,11 +351,13 @@ const previewTranslations: { [key: string]: PreviewTranslation } = {
 		use24Hour: "24시간 표시로 설정",
 		clockShortFormat: "짧은 시간 형식",
 		clockLongFormat: "긴 시간 형식",
+		lengthFormat: "길이 예시",
 	},
 }
 const currentPreviewTranslations = computed(() => {
 	return previewTranslations[selectedDialect.value] ?? previewTranslations["ja"];
 });
+
 </script>
 
 <template>
@@ -386,7 +398,7 @@ const currentPreviewTranslations = computed(() => {
 				<div class="tw:xl:ms-6 me-2 tw:flex tw:flex-auto tw:shrink tw:text-stone-900 tw:text-xs tw:xl:text-base tw:pointer-events-auto">
 					<button class="tw:px-5 tw:py-2 tw:rounded-full tw:border-white tw:border-s-2 tw:border-y-2 tw:cursor-pointer tw:bg-white/75 tw:hover:text-white tw:hover:bg-rose-500/75" type="button" @click.stop="localeSetModal = !localeSetModal">
 						<span>
-							<span class="d-inline-block text-center border-secondary rounded-pill me-1" style="border: solid 1px; width: calc(1.5ic + 2px);">{{ localeIcon[locale] }}</span>
+							<span class="d-inline-block text-center border-secondary rounded-pill me-1" style="border: solid 1px; width: calc(1.5ic + 2px);" v-html="localeIcon[locale]"/>
 							<span class="d-inline-block text-center ms-1" style="width: 2.2ic;">{{ localeShortName[locale] }}</span>
 						</span>
 						<teleport to="body">
@@ -469,7 +481,8 @@ const currentPreviewTranslations = computed(() => {
 									</b-row>
 									<b-row>
 										<b-col>
-											<span>{{  }}</span>
+											<span>{{ currentPreviewTranslations.lengthFormat }}:</span>
+											<span class="ms-1"><LocaleLength :length="172" original-unit="centimeter" :to-unit="unitType == 'metre' ? 'centimetre' : 'feet'"/></span>
 										</b-col>
 									</b-row>
 								</div>
