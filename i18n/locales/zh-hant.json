@@ -387,5 +387,10 @@
 			"http508": "伺服器在處理請求時偵測到無限迴圈。",
 			"http510": "需要進一步擴展才能處理該請求。"
 		}
+	},
+	"footerMessage": {
+		"animationReduced": "已減弱動態效果。",
+		"printed": "列印於 %s",
+		"printing": "所示內容為列印時的資訊。"
 	}
 }

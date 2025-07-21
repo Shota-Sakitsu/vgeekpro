@@ -387,5 +387,10 @@
 			"http508": "服务器在处理请求时检测到无限循环。",
 			"http510": "需要进一步扩展才能处理该请求。"
 		}
+	},
+	"footerMessage": {
+		"animationReduced": "已减弱动态效果。",
+		"printed": "打印于 %s",
+		"printing": "所示内容为打印时的信息。"
 	}
 }

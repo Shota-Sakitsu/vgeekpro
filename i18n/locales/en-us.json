@@ -387,5 +387,10 @@
 			"http508": "The server detected an infinite loop while processing the request.",
 			"http510": "Further extensions to the request are required for the server to fulfill it."
 		}
+	},
+	"footerMessage": {
+		"animationReduced": "Reduced motion is enabled.",
+		"printed": "Printed: %s",
+		"printing": "The content shown is as of the time of printing."
 	}
 }

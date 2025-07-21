@@ -387,5 +387,10 @@
 			"http508": "Le serveur a détecté une boucle infinie lors du traitement de la requête.",
 			"http510": "Des extensions supplémentaires à la requête sont nécessaires pour que le serveur puisse y répondre."
 		}
+	},
+	"footerMessage": {
+		"animationReduced": "Animations réduites activées.",
+		"printed": "Imprimé : %s",
+		"printing": "Le contenu affiché est à jour au moment de l'impression."
 	}
 }
