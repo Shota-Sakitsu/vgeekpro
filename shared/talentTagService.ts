@@ -1,20 +1,20 @@
-const checkTag = (tag: string, tags: string[]): boolean => {
+export const checkTag = (tag: string, tags: string[]): boolean => {
 	if (tag == "all") return true;
 	return tags.indexOf(tag) !== -1;
 }
 
-const specialTags: string[] = [
+export const specialTags: string[] = [
 	"all",								// * すべて表示
 	"member",							// * ぶいぎーく！メンバー
 	"staff",							// * ぶいぎーく！スタッフ
 ] as const;
 
-const unitTags: string[] = [
+export const unitTags: string[] = [
 	"security-girl",					// * セキュリティガール (ユニット名)
 	"hard-geeks",						// * はーどぎーく(ユニット名)
 ] as const;
 
-const attributeTags: string[] = [
+export const attributeTags: string[] = [
 	// 現時点で表示出来そうなものには表示タグを付けています。
 	// ドロップダウン選択にする予定です。
 	// タグID							|表示|概要
@@ -71,12 +71,12 @@ const attributeTags: string[] = [
 	"free-bsd",							//   FreeBSD
 ] as const;
 
-const allTags: string[] = [].concat(specialTags, unitTags, attributeTags) as const;
+export const allTags: string[] = ([] as string[]).concat(specialTags, unitTags, attributeTags);
 
-type Tags = (typeof allTags)[number];
+export type Tags = (typeof allTags)[number];
 
 // まず無いとは思いますが、不要になったら削除します
-const currentlyAvailableTags: string[] = [
+export const currentlyAvailableTags: string[] = [
 	"csharp",							// * C#
 	"frontend",							// * フロントエンド
 	"hardware",							// * ハードウェア
@@ -85,6 +85,6 @@ const currentlyAvailableTags: string[] = [
 	"meow",								// * にゃー (ねこ)
 	"network",							// * ネットワーク
 	"solid-js",							// * SolidJS
-] as const satisfies readonly Tags[]
+] as const satisfies Tags[]
 
-export {unitTags, attributeTags, specialTags, currentlyAvailableTags, allTags, Tags, checkTag};
+//export {unitTags, attributeTags, specialTags, allTags, checkTag};

@@ -13,6 +13,7 @@
 
 <script lang="ts" setup>
 import "assets/global.less";
+import * as bootstrapComponents from "bootstrap-vue-next/components";
 
 useHead({
 	link: [

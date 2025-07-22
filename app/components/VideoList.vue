@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 
-import {randomInt} from "~/composables/ExtendUtils";
-import type {SearchResponse} from "~/composables/youtubeApi/Types";
+//import {randomInt} from "~/composables/ExtendUtils";
+import type {SearchResponse} from "~~/shared/youtubeApi/Types";
+import {randomInt} from "#shared/ExtendUtils";
 
 type VideoMemberAttributes = {
 	url: string,
@@ -39,7 +40,7 @@ const colors: ("primary" | "secondary" | "success" | "danger" | "warning" | "inf
 const placeholderColors = toRef<("primary" | "secondary" | "success" | "danger" | "warning" | "info")[]>([]);
 
 for (let i = 0; i < 8; i++) {
-	placeholderColors.value.push(colors[randomInt(6)])
+	placeholderColors.value.push(colors[randomInt(6)] ?? "primary");
 }
 
 const loadedImageList = toRef<{ [videoId: string]: boolean }>({});
@@ -210,6 +211,7 @@ const printMedia = useMediaQuery('print');
 	.video-list-body {
 		flex-direction: column;
 	}
+
 	.shorts {
 		&.video-list-card {
 			flex-direction: column;

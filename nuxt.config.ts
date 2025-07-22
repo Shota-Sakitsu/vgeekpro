@@ -14,7 +14,7 @@ if (gitShow.error == undefined) {
 }
 
 export default defineNuxtConfig({
-	compatibilityDate: '2024-04-03',
+	compatibilityDate: '2025-07-15',
 	modules: [
 		"nuxt-aos",
 		"@nuxt/image",
@@ -41,7 +41,7 @@ export default defineNuxtConfig({
 		strategy: "prefix_except_default",
 		detectBrowserLanguage: {
 			useCookie: true,
-			redirectOn: "root",
+			redirectOn: "all",
 			fallbackLocale: 'ja',
 		},
 		//langDir: "./locales",

@@ -1,5 +1,5 @@
 {
-	"name": "nuxt-app",
+	"name": "@vgeekproduction/vgeekpro",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -8,44 +8,51 @@
 		"dev:host": "nuxt dev --host --dotenv .env",
 		"generate": "nuxt generate --dotenv .env",
 		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare"
+		"postinstall": "nuxt prepare",
+		"test": "node simple-test/run_test.mjs"
 	},
 	"devDependencies": {
-		"@bootstrap-vue-next/nuxt": "^0.30.3",
-		"@discordapp/twemoji": "^15.1.0",
+		"@bootstrap-vue-next/nuxt": "^0.30.4",
+		"@discordapp/twemoji": "^16.0.1",
 		"@mdi/font": "^7.4.47",
 		"@nuxt/fonts": "^0.11.4",
 		"@nuxt/image": "^1.10.0",
-		"@nuxtjs/i18n": "^9.5.5",
-		"@nuxtjs/robots": "^5.2.11",
-		"@tailwindcss/postcss": "^4.1.10",
-		"@tailwindcss/vite": "^4.1.10",
+		"@nuxtjs/i18n": "^10.0.1",
+		"@nuxtjs/robots": "^5.4.0",
+		"@tailwindcss/postcss": "^4.1.11",
+		"@tailwindcss/vite": "^4.1.11",
 		"@types/aos": "^3.0.7",
-		"@types/node": "^24.0.3",
-		"@vueuse/core": "^13.4.0",
-		"@vueuse/nuxt": "^13.4.0",
+		"@types/node": "^24.0.15",
+		"@vueuse/core": "^13.5.0",
+		"@vueuse/nuxt": "^13.5.0",
 		"animate.css": "^4.1.1",
 		"aos": "^2.3.4",
 		"autoprefixer": "^10.4.21",
 		"bootstrap": "^5.3.7",
 		"bootstrap-icons": "^1.13.1",
-		"bootstrap-vue-next": "^0.30.3",
-		"browserslist": "^4.25.0",
-		"less": "^4.3.0",
+		"bootstrap-vue-next": "^0.30.4",
+		"browserslist": "^4.25.1",
+		"less": "^4.4.0",
 		"nuxt": "^4.0.1",
 		"nuxt-aos": "^1.2.5",
 		"ohash": "^2.0.11",
 		"postcss": "^8.5.6",
 		"sass": "^1.89.2",
-		"sharp": "^0.34.2",
-		"swiper": "^11.2.8",
-		"tailwindcss": "^4.1.10",
+		"sharp": "^0.34.3",
+		"swiper": "^11.2.10",
+		"tailwindcss": "^4.1.11",
 		"taos": "^1.0.5",
 		"vue": "^3.5.17",
 		"vue-animate-onscroll": "^1.0.8",
 		"vue3-marquee": "^4.2.2",
 		"vue3-mq": "^4.0.2",
 		"vue3-smooth-scroll": "^0.8.1"
+	},
+	"optionalDependencies": {
+		"@types/selenium-webdriver": "^4.1.28",
+		"selenium-webdriver": "^4.34.0",
+		"geckodriver": "^5.0.0",
+		"serve": "^14.2.4"
 	},
 	"browserslist": [
 		"Firefox ESR",
@@ -65,5 +72,5 @@
 		"Last 0.25 Years",
 		"not Dead"
 	],
-	"packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
+	"packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }

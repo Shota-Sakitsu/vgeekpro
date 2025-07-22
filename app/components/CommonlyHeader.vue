@@ -369,9 +369,7 @@ const currentPreviewTranslations = computed(() => {
 					<img
 						alt="Vgeek Logo"
 						class="tw:object-contain tw:w-auto tw:h-auto tw:max-w-[40vw] tw:xl:max-w-full tw:max-h-[30vh] tw:xl:max-h-[15vh]"
-						height="267"
-						src="/images/logo.webp"
-						width="544"/>
+						src="/images/logo.webp"/>
 				</NuxtLinkLocale>
 			</div>
 			<div class="tw:text-stone-900 tw:flex tw:glow tw:justify-items-end">

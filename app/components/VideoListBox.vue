@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import type {Member} from "~/pages/index.vue";
 import {hash} from "ohash";
-import {YouTubeAPI} from "~/composables/youtubeApi/YouTubeAPI";
+import {YouTubeAPI} from "~~/shared/youtubeApi/YouTubeAPI";
 import type {ShallowRef} from "vue";
+import {TriState} from "#shared/ExtendUtils";
+
 type VideoMemberAttributes = {
 	members: Member[],
 }
@@ -65,6 +67,7 @@ const tabs = computed<{ [tabId: string | symbol]: VideoTab }>(() => {
 
 watch(profileIds, () => {
 	for (const updateKey in updateKeys.value) {
+		if (!updateKeys.value[updateKey]) continue;
 		updateKeys.value[updateKey]++;
 	}
 })
@@ -106,7 +109,7 @@ function tabChange(tabId: string | symbol) {
 		selectState.value[tabIdKey] = tabId == tabIdKey;
 	}
 	if (selectedTab.value == tabId) {
-		updateKeys.value[tabId]++;
+		if (updateKeys.value[tabId]) updateKeys.value[tabId]++;
 		console.debug(`Self Updating: ${tabId.toString()}`);
 	} else {
 		selectedTab.value = tabId;
@@ -160,7 +163,7 @@ const infoModal = toRef(false);
 		</ul>
 		<div class="tab-content border-bottom border-start border-end p-2 rounded-bottom">
 			<div v-for="tab in tabs" :id="`${tab.type}-tab-pane`" :key="hash(tab)" :aria-labelledby="`${tab.type}-tab`" :class="{'show': tab.type == selectedTab, 'active': tab.type == selectedTab}" class="tab-pane fade" role="tabpanel" tabindex="0">
-				<LazyVideoList @load-state="state => {loadingState[tab.type] = state;}" :current-key="tab.type" v-model:selected="selectState['all-videos']" :key="updateKeys[tab.type]" :ref="`videoList${tab.type.slice(0,1).toUpperCase()}${tab.type.slice(1)}`" :already-initialized="fetched" :is-shorts="tab.isShorts" :url="tab.url" @last-updated="updateTimeSet"/>
+				<LazyVideoList @load-state="state => {loadingState[tab.type] = state;}" :current-key="tab.type" v-model:selected="selectState['all-videos'] as boolean" :key="updateKeys[tab.type]" :ref="`videoList${tab.type.slice(0,1).toUpperCase()}${tab.type.slice(1)}`" :already-initialized="fetched" :is-shorts="tab.isShorts" :url="tab.url" @last-updated="updateTimeSet"/>
 			</div>
 			<div id="all-videos-tab-pane" aria-labelledby="`all-videos-tab" :class="{'show': 'all-videos' == selectedTab, 'active': 'all-videos' == selectedTab}" class="tab-pane fade" role="tabpanel" tabindex="0">
 				<AllVideoList @load-state="state => {loadingState['all-videos'] = state;}" v-model:selected="selectState['all-videos']" :key="updateKeys['all-videos']" :members="profileIds" :already-initialized="fetched" @last-updated="updateTimeSet"/>

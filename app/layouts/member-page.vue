@@ -10,11 +10,11 @@
 			</div>
 			<div class="tw:my-10 tw:w-full tw:flex tw:justify-around tw:items-start" v-if="reduceMotion || printPaper">
 				<span v-if="reduceMotion">
-					アニメーション削減が有効です。
+					{{ t("footerMessage.animationReduced") }}
 				</span>
 				<span v-else-if="printPaper">
-					{{ customDateFormatter(new Date()) }}印刷<br>
-					掲載されている内容は印刷当時のものです。
+					{{ t("footerMessage.printed").replace("%s", printTime) }}<br>
+					{{ t("footerMessage.printing") }}
 				</span>
 			</div>
 			<div class="tw:my-10 tw:w-full tw:flex tw:justify-around tw:items-start">
@@ -26,7 +26,7 @@
 	</main>
 </template>
 <script lang="ts" setup>
-import {customDateFormatter} from "~/composables/ExtendUtils";
+//import {customDateFormatter} from "~/composables/ExtendUtils";
 
 useHead({
 	htmlAttrs: {
@@ -55,6 +55,8 @@ const profileId = computed(() => {
 	return route.fullPath.substring(prefixLength);
 });
 
+const timeFormatter = useTimeFormatter();
+const printTime = computed(() => timeFormatter.getPrintTime());
 </script>
 <style lang="less">
 a {

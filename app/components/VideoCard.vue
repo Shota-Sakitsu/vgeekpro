@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {LiveStream, LiveStreamArchive, LiveStreamSchedule, VideoItem} from "~/composables/youtubeApi/Types";
+import type {LiveStream, LiveStreamArchive, LiveStreamSchedule, VideoItem} from "~~/shared/youtubeApi/Types";
 
 const {locale, t} = useI18n();
 const calendar = useCookie("intl-calendar");

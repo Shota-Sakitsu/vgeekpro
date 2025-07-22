@@ -1,7 +1,7 @@
 // VGeek Production Official Website
 //   External API Call Manager
 
-import {TriState} from "~/composables/ExtendUtils";
+import {TriState} from "~~/shared/ExtendUtils";
 
 import type {SearchCondition, VideosCondition} from "./Types";
 

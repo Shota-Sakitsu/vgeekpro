@@ -52,11 +52,13 @@ useSeoMeta({
 			<div class="tw:mb-28 tw:leading-loose tw:xl:max-w-screen-sm tw:xl:mx-auto">
 				<ul class="tw:list-disc tw:ps-5">
 					<li>ライブプログラミング作業</li>
-					<ul>
-						<li>VRChat アセット・ワールド制作 (代表作: VRCUI・VR 睡眠もできるイベントスペース: Miaŭ・THE MIND MIRROR〜貴方の性格を映す鏡)</li>
-						<li>Web 制作 (代表作: Dantalion・Launchpad Icons)</li>
-						<li>VRChat で“にゃんにゃん集会”と“UI/UX デザイン集会”を定期開催</li>
-					</ul>
+					<li>
+						<ul>
+							<li>VRChat アセット・ワールド制作 (代表作: VRCUI・VR 睡眠もできるイベントスペース: Miaŭ・THE MIND MIRROR〜貴方の性格を映す鏡)</li>
+							<li>Web 制作 (代表作: Dantalion・Launchpad Icons)</li>
+							<li>VRChat で“にゃんにゃん集会”と“UI/UX デザイン集会”を定期開催</li>
+						</ul>
+					</li>
 					<li>APEX Legends・雀魂を中心とした、さまざまなゲームの実況プレイ</li>
 				</ul>
 			</div>

@@ -52,6 +52,9 @@ const copyFn = () => {
 		}
 	}
 }
+const closeQrModal = () => {
+	qrCodeModal.value = false;
+}
 </script>
 
 <template>
@@ -77,12 +80,12 @@ const copyFn = () => {
 						</div>
 						<div class="ms-auto">
 							<b-button-group class="h-100">
-								<b-dropdown split :on-split-click="() => {qrCodeModal = false}">
+								<b-dropdown split :on-split-click="closeQrModal">
 									<template #button-content>
 										<i class="mdi mdi-close"></i>
 										{{ t("profileCommon.closeButton") }}
 									</template>
-									<b-dropdown-item @click.stop="qrCodeModal = false">
+									<b-dropdown-item @click.stop="closeQrModal">
 										<i class="mdi mdi-close"></i>
 										{{ t("profileCommon.closeButton") }}
 									</b-dropdown-item>

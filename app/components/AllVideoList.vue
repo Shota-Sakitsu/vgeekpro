@@ -1,19 +1,24 @@
 <script lang="ts" setup>
 
-import {randomInt} from "~/composables/ExtendUtils";
-import type {LiveStreamArchive, SearchResponse} from "~/composables/youtubeApi/Types";
-import {YouTubeAPI} from "~/composables/youtubeApi/YouTubeAPI";
+//import {randomInt} from "~/composables/ExtendUtils";
+import type {LiveStreamArchive, SearchResponse} from "~~/shared/youtubeApi/Types";
+import {YouTubeAPI} from "~~/shared/youtubeApi/YouTubeAPI";
+import {randomInt} from "#shared/ExtendUtils";
 
 type VideoMemberAttributes = {
 	members: string[],
-	alreadyInitialized: boolean,
-	selected: boolean,
+	alreadyInitialized?: boolean,
+	selected?: boolean,
 }
 
 
 const {t} = useI18n();
 const config = useRuntimeConfig();
-const props = defineProps<VideoMemberAttributes>();
+const props = withDefaults(defineProps<VideoMemberAttributes>(), {
+	members: () => [],
+	alreadyInitialized: true,
+	selected: false,
+});
 const youtubeAPI = new YouTubeAPI(config.public.YT_API_VERSION2)
 
 const scheduleUrl = youtubeAPI.getSearchApiEndpoint({members: props.members, type: "liveBefore", order: "desc"});
@@ -87,7 +92,7 @@ const liveVideoDividerCardBorderColor = computed(() => {
 });
 
 for (let i = 0; i < 8; i++) {
-	placeholderColors.value.push(colors[randomInt(6)])
+	placeholderColors.value.push(colors[randomInt(6)] ?? "primary");
 }
 
 const loadedImageList = toRef<{ [videoId: string]: boolean }>({});
@@ -283,7 +288,7 @@ const printMedia = useMediaQuery('print');
 			</div>
 			<VideoCard v-for="videoItem in videoList.items ?? []" :video-item="videoItem"/>
 		</div>
-		<div v-else-if="!props.alreadyInitialized" class="tw:leading-loose tw:text-black video-list-body tw:h-full tw:overflow-x-clip scrollbar">
+		<div v-else-if="!(props?.alreadyInitialized ?? true)" class="tw:leading-loose tw:text-black video-list-body tw:h-full tw:overflow-x-clip scrollbar">
 			<div v-for="(color, num) in placeholderColors" :key="num" class="tw:h-full tw:mx-2">
 				<BCard :class="`video-list-card tw:h-full border-${color} ${((reduceMotion || printMedia) ? '' : ' placeholder-wave')}`">
 					<template v-slot:img>

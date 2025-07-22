@@ -1,5 +1,5 @@
 //APIルート構造
-import type {TriState} from "~/composables/ExtendUtils";
+import type {TriState} from "~~/shared/ExtendUtils";
 
 export type VideosResponse = {
 	items: VideoItems,

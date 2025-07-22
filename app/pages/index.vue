@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 
-import {customDateFormatter} from "~/composables/ExtendUtils";
+//import {customDateFormatter} from "~/composables/ExtendUtils";
 import VGeekMarquee from "~/components/VGeekMarquee.vue";
+import {allTags, checkTag, currentlyAvailableTags, specialTags, unitTags} from "#shared/talentTagService";
 
 export type Member = {
 	name: string,
@@ -527,6 +528,8 @@ onMounted(async () => {
 	}
 })
 const config = useRuntimeConfig();
+const timeFormatter = useTimeFormatter();
+const printTime = computed(() => timeFormatter.getPrintTime());
 </script>
 
 <template>
@@ -819,11 +822,11 @@ const config = useRuntimeConfig();
 			<span v-if="reduceMotion || printPaper">
 				<br>
 				<span v-if="reduceMotion">
-					アニメーション削減が有効です。
+					{{ t("footerMessage.animationReduced") }}
 				</span>
 				<span v-else-if="printPaper">
-					{{ customDateFormatter(new Date()) }}印刷<br>
-					掲載されている内容は印刷当時のものです。
+					{{ t("footerMessage.printed").replace("%s", printTime) }}<br>
+					{{ t("footerMessage.printing") }}
 				</span>
 			</span>
 		</span>
