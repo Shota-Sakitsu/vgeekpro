@@ -50,7 +50,7 @@ export default defineNuxtConfig({
 				name: "日本語",
 				code: "ja",
 				iso: "ja-JP",
-				file: "ja.json",
+				file: "ja-jp.json",
 			},
 			{
 				name: "関西弁",
