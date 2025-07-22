@@ -35,7 +35,7 @@ useSeoMeta({
 				<XButtonLink screen-name=""/>
 				<YouTubeChannel handle=""/>
 				<TwitchStream user-id=""/>
-				<TwitCastingStream user-id=""/>
+				<TwitCastingStream user-id="" account-type="Unknown"/>
 				<GitHubProfile user-id=""/>
 				<OtherSiteLink href=""/>
 				<VRoidHubLink user-id=""/>
